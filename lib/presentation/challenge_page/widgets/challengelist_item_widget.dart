@@ -113,6 +113,9 @@ class ChallengelistItemWidget extends StatelessWidget {
                 ),
                 SizedBox(height: 3.v),
                 CustomElevatedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, AppRoutes.detailpage);
+                  },
                   height: 38.v,
                   width: 140.h,
                   text: "Join challenge",

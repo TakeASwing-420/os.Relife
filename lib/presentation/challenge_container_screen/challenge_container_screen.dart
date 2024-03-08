@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:deep_s_application3/presentation/iphone_13_mini_twentyseven_screen/iphone_13_mini_twentyseven_screen.dart';
 import 'package:deep_s_application3/presentation/iphone_13_mini_twentysix_screen/iphone_13_mini_twentysix_screen.dart';
 import 'package:deep_s_application3/presentation/iphone_13_mini_twenty_screen/iphone_13_mini_twenty_screen.dart';
+import 'package:deep_s_application3/presentation/settings/settings.dart';
 
 // ignore_for_file: must_be_immutable
 class ChallengeContainerScreen extends StatelessWidget {
@@ -48,7 +49,7 @@ class ChallengeContainerScreen extends StatelessWidget {
       case BottomBarEnum.Challenge:
         return AppRoutes.challengePage;
       case BottomBarEnum.Setting:
-        return "/";
+        return AppRoutes.SettingsScreen;
       case BottomBarEnum.Home:
         return AppRoutes.iphone13MiniTwentysixScreen;
       default:
@@ -67,6 +68,8 @@ class ChallengeContainerScreen extends StatelessWidget {
         return Iphone13MiniTwentysevenScreen();
       case AppRoutes.iphone13MiniTwentysixScreen:
         return Iphone13MiniTwentysixScreen();
+      case AppRoutes.SettingsScreen:
+        return MySettingsScreen();
       default:
         return DefaultWidget();
     }

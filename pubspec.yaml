@@ -9,6 +9,7 @@ dependencies:
   cached_network_image: ^3.3.0
   flutter_svg: ^2.0.9
   outline_gradient_button: ^2.0.1+1
+  gradient_borders: ^1.0.0
   flutter_svg_provider: ^1.0.7
   readmore: ^2.2.0
   intl: ^0.18.0
@@ -31,3 +32,9 @@ flutter:
           weight: 500
         - asset: assets/fonts/SpaceGroteskLight.ttf
           weight: 300
+    - family: customfont
+      fonts:
+        - asset: assets/fonts/death-note/hoolla.ttf
+    - family: new
+      fonts:
+        - asset: assets/fonts/Fasthand-Regular.ttf

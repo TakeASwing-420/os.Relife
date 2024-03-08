@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
           theme: theme,
           title: 'deep_s_application3',
           debugShowCheckedModeBanner: false,
-          initialRoute: AppRoutes.appNavigationScreen,
+          initialRoute: AppRoutes.MySplashScreen,
           routes: AppRoutes.routes,
         );
       },

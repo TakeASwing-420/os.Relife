@@ -52,8 +52,8 @@ class AppNavigationScreen extends StatelessWidget {
                         _buildScreenTitle(
                           context,
                           screenTitle: "Detail Page - Challenge",
-                          onTapScreenTitle: () => onTapScreenTitle(
-                              context, AppRoutes.detailPageChallengeScreen),
+                          onTapScreenTitle: () =>
+                              onTapScreenTitle(context, AppRoutes.detailpage),
                         ),
                         _buildScreenTitle(
                           context,
