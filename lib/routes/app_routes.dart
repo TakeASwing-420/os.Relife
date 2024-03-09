@@ -47,8 +47,8 @@ class AppRoutes {
     appNavigationScreen: (context) => AppNavigationScreen(),
     SettingsScreen: (context) => MySettingsScreen(),
     MySplashScreen: (context) => SplashScreen(),
-    SignUp: (context) => LoginPage(),
-    LogIn: (context) => RegisterPage(),
+    SignUp: (context) => RegisterPage(),
+    LogIn: (context) => LoginPage(),
     detailpage: (context) => DetailPageChallengeScreen()
   };
 }

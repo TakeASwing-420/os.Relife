@@ -37,8 +37,16 @@ class _LoginPageState extends State<LoginPage> {
                         fontSize: 22),
                     border: OutlineInputBorder(
                       borderSide: BorderSide(
-                        color: Colors.red,
-                      ),
+                          color: Colors.red), // Border color when not focused
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: Colors
+                              .red), // Border color when enabled but not focused
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: Colors.red), // Border color when focused
                     ),
                     contentPadding: EdgeInsets.fromLTRB(20, 8, 8, 8),
                     filled: true,
@@ -58,6 +66,19 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(height: 10),
                 TextField(
                   decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: Colors.red), // Border color when not focused
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: Colors
+                              .red), // Border color when enabled but not focused
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: Colors.red), // Border color when focused
+                    ),
                     fillColor: Colors.black,
                     labelText: 'Password',
                     labelStyle: TextStyle(
@@ -65,14 +86,13 @@ class _LoginPageState extends State<LoginPage> {
                         fontWeight: FontWeight.w500,
                         fontFamily: "new",
                         fontSize: 22),
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.red,
-                      ),
-                    ),
                     contentPadding: EdgeInsets.fromLTRB(20, 8, 8, 8),
                     filled: true,
                   ),
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w500,
+                      decorationThickness: 0),
                   obscureText: true,
                   cursorColor: Colors.white,
                   onChanged: (value) {
@@ -91,7 +111,10 @@ class _LoginPageState extends State<LoginPage> {
                   },
                   child: Text(
                     'Login',
-                    style: TextStyle(fontSize: 18, color: Colors.white),
+                    style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600),
                   ),
                 ),
               ],
@@ -181,7 +204,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     });
                   },
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 15),
                 TextField(
                   decoration: InputDecoration(
                       labelText: 'Password',
@@ -235,16 +258,20 @@ class _RegisterPageState extends State<RegisterPage> {
                     });
                   },
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 15),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
+                      fixedSize: Size(double.maxFinite, 35),
                       backgroundColor: Colors.blue[600]),
                   onPressed: () {
                     Navigator.pushNamed(
                         context, AppRoutes.challengeContainerScreen);
                   },
-                  child:
-                      Text('Register', style: TextStyle(color: Colors.white)),
+                  child: Text('Register',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600)),
                 ),
               ],
             ),

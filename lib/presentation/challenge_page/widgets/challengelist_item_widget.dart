@@ -1,6 +1,7 @@
 import 'package:deep_s_application3/core/app_export.dart';
 import 'package:deep_s_application3/widgets/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
+import 'package:deep_s_application3/presentation/detail_page_challenge_screen/detail_page_challenge_screen.dart';
 
 // ignore: must_be_immutable
 class ChallengelistItemWidget extends StatelessWidget {
@@ -114,7 +115,13 @@ class ChallengelistItemWidget extends StatelessWidget {
                 SizedBox(height: 3.v),
                 CustomElevatedButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, AppRoutes.detailpage);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            DetailPageChallengeScreen(), // Replace DetailPage with your desired destination widget
+                      ),
+                    );
                   },
                   height: 38.v,
                   width: 140.h,

@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import 'package:deep_s_application3/routes/app_routes.dart';
+import 'package:deep_s_application3/core/app_export.dart';
 
 class GradientLoginButton extends StatelessWidget {
   const GradientLoginButton({Key? key}) : super(key: key);
@@ -8,7 +9,7 @@ class GradientLoginButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(16.v),
       ),
       child: ElevatedButton(
         onPressed: () {
@@ -16,14 +17,14 @@ class GradientLoginButton extends StatelessWidget {
         },
         style: ElevatedButton.styleFrom(
           elevation: 5,
-          fixedSize: const Size(250, 15),
+          fixedSize: Size(185.h, 35.v),
           backgroundColor: Color.fromARGB(255, 243, 96, 27),
         ),
-        child: const Text(
+        child: Text(
           "Login",
-          style: const TextStyle(
+          style: TextStyle(
               color: Colors.white,
-              fontSize: 16,
+              fontSize: 16.fSize,
               fontWeight: FontWeight.bold,
               letterSpacing: 1.5),
         ),
@@ -39,22 +40,22 @@ class GradientRegisterButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(16.v),
       ),
       child: ElevatedButton(
         onPressed: () {
           Navigator.pushNamed(context, AppRoutes.SignUp);
         },
         style: ElevatedButton.styleFrom(
-          fixedSize: const Size(250, 15),
+          fixedSize: Size(185.h, 35.v),
           backgroundColor: Colors.white,
           elevation: 5,
         ),
-        child: const Text(
+        child: Text(
           "Register",
           style: TextStyle(
               color: Color.fromARGB(255, 243, 96, 27),
-              fontSize: 16,
+              fontSize: 16.fSize,
               fontWeight: FontWeight.bold,
               letterSpacing: 1.5),
         ),
