@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:deep_s_application3/routes/app_routes.dart';
+import './homepage.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -9,8 +10,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  String username = "";
-  String password = "";
+  String? username;
+  String? password;
 
   @override
   Widget build(BuildContext context) {
@@ -135,7 +136,6 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   String username = "";
-  String address = "";
   String password = "";
   String confirmPassword = "";
 
@@ -178,33 +178,6 @@ class _RegisterPageState extends State<RegisterPage> {
                   },
                 ),
                 SizedBox(height: 10),
-                TextField(
-                  decoration: InputDecoration(
-                      labelText: 'Web3 Wallet Address',
-                      labelStyle: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 19,
-                          fontFamily: "new"),
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black),
-                      ),
-                      contentPadding: EdgeInsets.fromLTRB(20, 8, 8, 8),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.black),
-                      )),
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w500,
-                  ),
-                  cursorColor: Colors.black,
-                  onChanged: (value) {
-                    setState(() {
-                      address = value;
-                    });
-                  },
-                ),
-                SizedBox(height: 15),
                 TextField(
                   decoration: InputDecoration(
                       labelText: 'Password',
@@ -263,9 +236,13 @@ class _RegisterPageState extends State<RegisterPage> {
                   style: ElevatedButton.styleFrom(
                       fixedSize: Size(double.maxFinite, 35),
                       backgroundColor: Colors.blue[600]),
-                  onPressed: () {
-                    Navigator.pushNamed(
-                        context, AppRoutes.challengeContainerScreen);
+                  onPressed: () async {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              HomePage(username: username, password: password)),
+                    );
                   },
                   child: Text('Register',
                       style: TextStyle(

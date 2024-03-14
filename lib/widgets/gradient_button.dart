@@ -9,7 +9,7 @@ class GradientLoginButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16.v),
+        borderRadius: BorderRadius.circular(30.v),
       ),
       child: ElevatedButton(
         onPressed: () {
@@ -17,16 +17,15 @@ class GradientLoginButton extends StatelessWidget {
         },
         style: ElevatedButton.styleFrom(
           elevation: 5,
-          fixedSize: Size(185.h, 35.v),
+          fixedSize: Size(250.h, 33.v),
           backgroundColor: Color.fromARGB(255, 243, 96, 27),
         ),
         child: Text(
           "Login",
           style: TextStyle(
-              color: Colors.white,
-              fontSize: 16.fSize,
-              fontWeight: FontWeight.bold,
-              letterSpacing: 1.5),
+            color: Colors.white,
+            fontSize: 15.fSize,
+          ),
         ),
       ),
     );
@@ -40,24 +39,23 @@ class GradientRegisterButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16.v),
+        borderRadius: BorderRadius.circular(30.v),
       ),
       child: ElevatedButton(
         onPressed: () {
           Navigator.pushNamed(context, AppRoutes.SignUp);
         },
         style: ElevatedButton.styleFrom(
-          fixedSize: Size(185.h, 35.v),
+          fixedSize: Size(250.h, 33.v),
           backgroundColor: Colors.white,
           elevation: 5,
         ),
         child: Text(
           "Register",
           style: TextStyle(
-              color: Color.fromARGB(255, 243, 96, 27),
-              fontSize: 16.fSize,
-              fontWeight: FontWeight.bold,
-              letterSpacing: 1.5),
+            color: Color.fromARGB(255, 243, 96, 27),
+            fontSize: 15.fSize,
+          ),
         ),
       ),
     );

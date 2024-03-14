@@ -94,9 +94,7 @@ class CustomSearchView extends StatelessWidget {
           maxLines: maxLines ?? 1,
           decoration: decoration,
           validator: validator,
-          onChanged: (String value) {
-            onChanged!.call(value);
-          },
+          onChanged: (String value) {},
         ),
       );
   InputDecoration get decoration => InputDecoration(

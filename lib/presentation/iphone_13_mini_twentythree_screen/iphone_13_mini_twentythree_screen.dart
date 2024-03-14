@@ -32,7 +32,7 @@ class Iphone13MiniTwentythreeScreen extends StatelessWidget {
                                     appTheme.red700
                                   ])))),
                       Align(
-                          alignment: Alignment.center,
+                          alignment: Alignment.centerRight,
                           child: Container(
                               decoration: BoxDecoration(
                                   image: DecorationImage(
@@ -540,45 +540,21 @@ class Iphone13MiniTwentythreeScreen extends StatelessWidget {
                           children: [
                             Align(
                                 alignment: Alignment.center,
-                                child: Padding(
-                                    padding: EdgeInsets.only(right: 29.h),
-                                    child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Padding(
-                                              padding:
-                                                  EdgeInsets.only(bottom: 98.v),
-                                              child: CustomIconButton(
-                                                  height: 33.adaptSize,
-                                                  width: 33.adaptSize,
-                                                  padding: EdgeInsets.all(8.h),
-                                                  decoration:
-                                                      IconButtonStyleHelper
-                                                          .fillWhiteA,
-                                                  onTap: () {
-                                                    onTapBtnClose(context);
-                                                  },
-                                                  child: CustomImageView(
-                                                      imagePath: ImageConstant
-                                                          .imgCloseBlack900,
-                                                      color: Colors.brown))),
-                                          CustomImageView(
-                                              imagePath: ImageConstant
-                                                  .imgFrame62130x130,
-                                              height: 175.adaptSize,
-                                              width: 175.adaptSize,
-                                              radius:
-                                                  BorderRadius.circular(39.h))
-                                        ]))),
+                                child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      SizedBox(width: 80.h),
+                                      CustomImageView(
+                                          imagePath:
+                                              ImageConstant.imgFrame62130x130,
+                                          height: 175.adaptSize,
+                                          width: 175.adaptSize,
+                                          radius: BorderRadius.circular(39.h))
+                                    ])),
                           ])))
             ])));
   }
 
   /// Navigates back to the previous screen.
-  onTapBtnClose(BuildContext context) {
-    Navigator.pop(context);
-  }
 }
