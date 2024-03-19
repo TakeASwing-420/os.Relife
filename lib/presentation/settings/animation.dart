@@ -14,7 +14,7 @@ class ImageBuilderAnimation extends StatelessWidget {
   Widget build(BuildContext context) {
     return TweenAnimationBuilder<double>(
       tween: Tween<double>(begin: 0.5, end: 0.91),
-      duration: Duration(seconds: 2),
+      duration: Duration(milliseconds: 1500),
       builder: (BuildContext context, double _scale, Widget? child) {
         return Transform.scale(
             scale: _scale,

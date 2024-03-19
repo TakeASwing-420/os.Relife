@@ -61,24 +61,28 @@ class ChallengePage extends StatelessWidget {
               borderRadius: BorderRadius.circular(50.adaptSize),
               color: Colors.white,
             ),
-            margin: EdgeInsets.only(top: 34.h, right: 20.v),
+            margin: EdgeInsets.only(top: 40.h, right: 12.v),
             height: 40.v,
-            width: 113.h,
+            width: 135.h,
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
-                  padding: EdgeInsets.all(3.v),
+                  padding: EdgeInsets.symmetric(vertical: 3.v),
                   child: CircleAvatar(
                     backgroundImage: AssetImage(ImageConstant.coin),
                     radius: 22.adaptSize,
                   ),
                 ),
                 SizedBox(width: 18.h),
-                Text(
-                  '13,307',
-                  style: TextStyle(
-                    fontSize: 16.fSize,
-                    fontWeight: FontWeight.bold,
+                Padding(
+                  padding: EdgeInsets.only(right: 8.h),
+                  child: Text(
+                    '13,307',
+                    style: TextStyle(
+                      fontSize: 16.fSize,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ],
