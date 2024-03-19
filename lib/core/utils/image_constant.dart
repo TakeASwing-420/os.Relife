@@ -119,4 +119,6 @@ class ImageConstant {
 
   // Common images
   static String imgLogoPrimary = '$imagePath/img_logo_primary.png';
+
+  static String coin = "$imagePath/coin.jpg";
 }

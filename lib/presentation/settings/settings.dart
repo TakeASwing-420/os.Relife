@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:Relife/core/app_export.dart';
+import "animation.dart";
 
 class MySettingsScreen extends StatefulWidget {
   @override
@@ -8,6 +10,7 @@ class MySettingsScreen extends StatefulWidget {
 class _MySettingsScreenState extends State<MySettingsScreen> {
   String user_wallet = "";
   String password = "";
+  String confirm_password = "";
 
   Future<dynamic> showUpdatePasswordDialog(BuildContext context, String Title) {
     return showDialog(
@@ -50,6 +53,36 @@ class _MySettingsScreenState extends State<MySettingsScreen> {
                   });
                 },
               ),
+              SizedBox(height: 10),
+              TextField(
+                decoration: InputDecoration(
+                  labelText: 'Confirm Password',
+                  labelStyle: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500,
+                      fontFamily: "new",
+                      fontSize: 22),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.red,
+                    ),
+                  ),
+                  contentPadding: EdgeInsets.fromLTRB(20, 8, 8, 8),
+                  filled: true,
+                  fillColor: Colors.white,
+                ),
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w500,
+                ),
+                cursorColor: Colors.black,
+                obscureText: true,
+                onChanged: (value) {
+                  setState(() {
+                    confirm_password = value;
+                  });
+                },
+              ),
             ],
           ),
           actions: [
@@ -86,7 +119,7 @@ class _MySettingsScreenState extends State<MySettingsScreen> {
               SizedBox(height: 10),
               TextField(
                 decoration: InputDecoration(
-                  labelText: 'User Name',
+                  labelText: 'New Wallet Address',
                   labelStyle: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.w500,
@@ -141,8 +174,72 @@ class _MySettingsScreenState extends State<MySettingsScreen> {
         return AlertDialog(
           title: Text(Title,
               style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
-          content: Text(
-              "This is the delete profile section. After doing so, re-enter into the app to apply changes"),
+          content: Column(
+            children: [
+              Text(
+                  "This is the delete profile section. After doing so, re-enter into the app to apply changes"),
+              SizedBox(height: 10),
+              TextField(
+                decoration: InputDecoration(
+                  labelText: 'Password',
+                  labelStyle: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500,
+                      fontFamily: "new",
+                      fontSize: 22),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.red,
+                    ),
+                  ),
+                  contentPadding: EdgeInsets.fromLTRB(20, 8, 8, 8),
+                  filled: true,
+                  fillColor: Colors.white,
+                ),
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w500,
+                ),
+                cursorColor: Colors.black,
+                obscureText: true,
+                onChanged: (value) {
+                  setState(() {
+                    password = value;
+                  });
+                },
+              ),
+              SizedBox(height: 10),
+              TextField(
+                decoration: InputDecoration(
+                  labelText: 'Confirm Password',
+                  labelStyle: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500,
+                      fontFamily: "new",
+                      fontSize: 22),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.red,
+                    ),
+                  ),
+                  contentPadding: EdgeInsets.fromLTRB(20, 8, 8, 8),
+                  filled: true,
+                  fillColor: Colors.white,
+                ),
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w500,
+                ),
+                cursorColor: Colors.black,
+                obscureText: true,
+                onChanged: (value) {
+                  setState(() {
+                    confirm_password = value;
+                  });
+                },
+              ),
+            ],
+          ),
           actions: [
             TextButton(
               child: Text("Close"),
@@ -195,21 +292,19 @@ class _MySettingsScreenState extends State<MySettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.redAccent,
-        title: Text(
-          'BACK',
-          style: TextStyle(fontFamily: "georgia", fontSize: 19),
-        ),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_outlined),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-      ),
       body: Container(
-        color: Colors.white,
+        width: SizeUtils.width,
+        height: SizeUtils.height,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment(0.13, 0.05),
+            end: Alignment(0.59, 0.99),
+            colors: [
+              appTheme.whiteA700,
+              appTheme.red300,
+            ],
+          ),
+        ),
         padding: const EdgeInsets.all(15),
         child: ListView(
           children: [
@@ -221,7 +316,7 @@ class _MySettingsScreenState extends State<MySettingsScreen> {
                   "Account Settings",
                   style: TextStyle(
                     color: Colors.black87,
-                    fontSize: 24,
+                    fontSize: 21,
                     letterSpacing: 2,
                     fontWeight: FontWeight.bold,
                     fontFamily: "customfont",
@@ -286,6 +381,20 @@ class _MySettingsScreenState extends State<MySettingsScreen> {
                   showUpdateAvatarDialog(context, "Update Avatar");
                 },
               ),
+            ),
+            Center(
+              child: Padding(
+                padding: EdgeInsets.all(20),
+                child: ImageBuilderAnimation(
+                  imageAssetPath: ImageConstant.imgFrame622,
+                  RADIUS: 110,
+                ),
+              ),
+            ),
+            Center(
+              child: Text("Augatha Christy",
+                  style: TextStyle(
+                      color: Colors.black87, fontSize: 21, fontFamily: "new")),
             ),
           ],
         ),

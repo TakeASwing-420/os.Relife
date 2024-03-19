@@ -37,7 +37,8 @@ class Iphone13MiniTwentyScreen extends StatelessWidget {
                                           AppDecoration.gradientDeepOrangeToRed,
                                       child: SingleChildScrollView(
                                         child: Column(children: [
-                                          SizedBox(height: 15.v),
+                                          SizedBox(height: 28.v),
+                                          coin_display(),
                                           _buildLetsFindServiceSection(context),
                                           SizedBox(height: 13.v),
                                           CustomSearchView(
@@ -57,7 +58,7 @@ class Iphone13MiniTwentyScreen extends StatelessWidget {
   /// Section Widget
   Widget _buildLetsFindServiceSection(BuildContext context) {
     return SizedBox(
-        height: 141.v,
+        height: 125.v,
         width: 335.h,
         child: Stack(alignment: Alignment.bottomRight, children: [
           Align(
@@ -91,6 +92,41 @@ class Iphone13MiniTwentyScreen extends StatelessWidget {
             onTapUserProfile(context);
           });
         });
+  }
+
+  Row coin_display() {
+    return Row(
+      children: [
+        Spacer(),
+        Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(50.adaptSize),
+              color: Colors.white,
+            ),
+            margin: EdgeInsets.only(top: 34.h, right: 16.v),
+            height: 40.v,
+            width: 113.h,
+            child: Row(
+              children: [
+                Padding(
+                  padding: EdgeInsets.all(3.v),
+                  child: CircleAvatar(
+                    backgroundImage: AssetImage(ImageConstant.coin),
+                    radius: 22.adaptSize,
+                  ),
+                ),
+                SizedBox(width: 18.h),
+                Text(
+                  '13,307',
+                  style: TextStyle(
+                    fontSize: 16.fSize,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ))
+      ],
+    );
   }
 
   /// Section Widget

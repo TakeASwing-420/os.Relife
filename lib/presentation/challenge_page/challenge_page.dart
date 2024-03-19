@@ -40,6 +40,7 @@ class ChallengePage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   SizedBox(height: 16.v),
+                  coin_display(),
                   _buildChallengeList(context),
                   SizedBox(height: 16.v),
                 ],
@@ -48,6 +49,41 @@ class ChallengePage extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  Row coin_display() {
+    return Row(
+      children: [
+        Spacer(),
+        Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(50.adaptSize),
+              color: Colors.white,
+            ),
+            margin: EdgeInsets.only(top: 34.h, right: 20.v),
+            height: 40.v,
+            width: 113.h,
+            child: Row(
+              children: [
+                Padding(
+                  padding: EdgeInsets.all(3.v),
+                  child: CircleAvatar(
+                    backgroundImage: AssetImage(ImageConstant.coin),
+                    radius: 22.adaptSize,
+                  ),
+                ),
+                SizedBox(width: 18.h),
+                Text(
+                  '13,307',
+                  style: TextStyle(
+                    fontSize: 16.fSize,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ))
+      ],
     );
   }
 
