@@ -21,9 +21,8 @@ class MyApp extends StatelessWidget {
       builder: (context, orientation, deviceType) {
         return MaterialApp(
           theme: theme,
-          title: 'deep_s_application3',
           debugShowCheckedModeBanner: false,
-          initialRoute: AppRoutes.MySplashScreen,
+          initialRoute: AppRoutes.splashscreenScreen,
           routes: AppRoutes.routes,
         );
       },

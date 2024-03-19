@@ -1,7 +1,7 @@
-import 'package:deep_s_application3/core/app_export.dart';
-import 'package:deep_s_application3/widgets/custom_elevated_button.dart';
+import 'package:Relife/core/app_export.dart';
+import 'package:Relife/widgets/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
-import 'package:deep_s_application3/presentation/detail_page_challenge_screen/detail_page_challenge_screen.dart';
+import 'package:Relife/presentation/detail_page_challenge_screen/detail_page_challenge_screen.dart';
 
 // ignore: must_be_immutable
 class ChallengelistItemWidget extends StatelessWidget {

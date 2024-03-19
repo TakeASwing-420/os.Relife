@@ -1,9 +1,8 @@
-import 'package:deep_s_application3/core/app_export.dart';
-import 'package:deep_s_application3/widgets/custom_icon_button.dart';
+import 'package:Relife/core/app_export.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart' as fs;
 import 'package:outline_gradient_button/outline_gradient_button.dart';
-import 'package:deep_s_application3/widgets/custom_elevated_button.dart';
+import 'package:Relife/widgets/custom_elevated_button.dart';
 
 class Iphone13MiniTwentythreeScreen extends StatelessWidget {
   Iphone13MiniTwentythreeScreen({Key? key}) : super(key: key);

@@ -1,4 +1,4 @@
-package com.deepsapplication.app
+package com.example.Relife
 
 import io.flutter.embedding.android.FlutterActivity
 

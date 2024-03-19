@@ -38,9 +38,9 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.deepsapplication.app"
-        minSdkVersion 21
-        targetSdkVersion flutter.targetSdkVersion
+        applicationId "com.example.Relife"
+        minSdkVersion flutter.minSdkVersion
+        targetSdkVersion 28
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }

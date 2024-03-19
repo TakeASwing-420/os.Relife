@@ -1,5 +1,5 @@
-import 'package:deep_s_application3/core/app_export.dart';
-import 'package:deep_s_application3/widgets/custom_icon_button.dart';
+import 'package:Relife/core/app_export.dart';
+import 'package:Relife/widgets/custom_icon_button.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable

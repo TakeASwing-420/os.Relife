@@ -17,6 +17,34 @@ class CustomTextStyles {
   static get displayMediumWhiteA700 => theme.textTheme.displayMedium!.copyWith(
         color: appTheme.whiteA700,
       );
+  // Title text style
+  static get titleSmallBlack900 => theme.textTheme.titleSmall!.copyWith(
+        color: appTheme.black900,
+        fontSize: 14.fSize,
+        fontWeight: FontWeight.w600,
+      );
+  static get titleSmallOnPrimary => theme.textTheme.titleSmall!.copyWith(
+        color: theme.colorScheme.onPrimary,
+        fontWeight: FontWeight.w600,
+      );
+  static get titleSmallOnPrimaryContainer =>
+      theme.textTheme.titleSmall!.copyWith(
+        color: theme.colorScheme.onPrimaryContainer,
+        fontSize: 14.fSize,
+        fontWeight: FontWeight.w600,
+      );
+  static get titleSmallPoppinsOnSecondaryContainer =>
+      theme.textTheme.titleSmall!.poppins.copyWith(
+        color: theme.colorScheme.onSecondaryContainer,
+        fontWeight: FontWeight.w600,
+      );
+  static get titleSmallff090808 => theme.textTheme.titleSmall!.copyWith(
+        color: Color(0XFF090808),
+      );
+  static get titleSmallfff58220 => theme.textTheme.titleSmall!.copyWith(
+        color: Color(0XFFF58220),
+        fontWeight: FontWeight.w700,
+      );
   // Headline text style
   static get headlineLargeBlack900 => theme.textTheme.headlineLarge!.copyWith(
         color: appTheme.black900,
@@ -69,9 +97,6 @@ class CustomTextStyles {
   static get titleMediumWhiteA700 => theme.textTheme.titleMedium!.copyWith(
         color: appTheme.whiteA700,
       );
-  static get titleSmallBlack900 => theme.textTheme.titleSmall!.copyWith(
-        color: appTheme.black900,
-      );
   static get titleSmallDeeporangeA200 => theme.textTheme.titleSmall!.copyWith(
         color: appTheme.deepOrangeA200,
       );
@@ -91,6 +116,26 @@ extension on TextStyle {
   TextStyle get spaceGrotesk {
     return copyWith(
       fontFamily: 'Space Grotesk',
+    );
+  }
+}
+
+extension on TextStyle {
+  TextStyle get inter {
+    return copyWith(
+      fontFamily: 'Inter',
+    );
+  }
+
+  TextStyle get kavoon {
+    return copyWith(
+      fontFamily: 'Kavoon',
+    );
+  }
+
+  TextStyle get poppins {
+    return copyWith(
+      fontFamily: 'Poppins',
     );
   }
 }

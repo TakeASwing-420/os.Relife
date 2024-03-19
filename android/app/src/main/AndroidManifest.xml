@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.deepsapplication.app">
+    package="com.example.Relife">
 
     <queries>
         <package android:name="io.metamask"/>
@@ -13,7 +13,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:label="deep_s_application3"
+        android:label="os.Relife"
         android:icon="@mipmap/ic_launcher">
 
         <activity

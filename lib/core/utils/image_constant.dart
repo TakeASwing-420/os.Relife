@@ -110,4 +110,13 @@ class ImageConstant {
   static String imgSearchGray500 = '$imagePath/img_search_gray_500.svg';
 
   static String imageNotFound = 'assets/images/image_not_found.png';
+
+  // SplashScreen images
+  static String imgLogo = '$imagePath/img_logo.png';
+
+  // Login images
+  static String imgFluenteye20filled = '$imagePath/img_fluenteye20filled.svg';
+
+  // Common images
+  static String imgLogoPrimary = '$imagePath/img_logo_primary.png';
 }

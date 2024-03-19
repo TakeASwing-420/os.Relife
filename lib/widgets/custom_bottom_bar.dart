@@ -1,4 +1,4 @@
-import 'package:deep_s_application3/core/app_export.dart';
+import 'package:Relife/core/app_export.dart';
 import 'package:flutter/material.dart';
 
 class CustomBottomBar extends StatefulWidget {

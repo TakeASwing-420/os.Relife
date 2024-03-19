@@ -176,6 +176,16 @@ class PrimaryColors {
   // Amber
   Color get amberA200 => Color(0XFFF5CC3E);
 
+  // BlueGray
+  Color get blueGray400 => Color(0XFF8390A1);
+
+  // Gray
+  Color get gray100 => Color(0XFFF6F7F8);
+  Color get gray50 => Color(0XFFF7F8F9);
+
+  // Indigo
+  Color get indigo50 => Color(0XFFE8ECF4);
+
   // Black
   Color get black900 => Color(0XFF000000);
   Color get black90026 => Color(0X26040404);

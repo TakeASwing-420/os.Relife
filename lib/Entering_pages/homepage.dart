@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:web3modal_flutter/web3modal_flutter.dart';
-import 'package:deep_s_application3/core/app_export.dart';
+import 'package:Relife/core/app_export.dart';
 import 'package:slider_button/slider_button.dart';
 
 class HomePage extends StatefulWidget {

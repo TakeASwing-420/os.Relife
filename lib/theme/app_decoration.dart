@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:deep_s_application3/core/app_export.dart';
+import 'package:Relife/core/app_export.dart';
 
 class AppDecoration {
   // Fill decorations
+  static BoxDecoration get fillOnPrimary => BoxDecoration(
+        color: theme.colorScheme.onPrimary,
+      );
+  static BoxDecoration get fillPrimary => BoxDecoration(
+        color: theme.colorScheme.primary,
+      );
   static BoxDecoration get fillBlack => BoxDecoration(
         color: appTheme.black900,
       );

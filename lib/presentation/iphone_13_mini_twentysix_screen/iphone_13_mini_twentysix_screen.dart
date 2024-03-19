@@ -1,5 +1,5 @@
 import '../iphone_13_mini_twentysix_screen/widgets/visitlist_item_widget.dart';
-import 'package:deep_s_application3/core/app_export.dart';
+import 'package:Relife/core/app_export.dart';
 
 import 'package:flutter/material.dart';
 
