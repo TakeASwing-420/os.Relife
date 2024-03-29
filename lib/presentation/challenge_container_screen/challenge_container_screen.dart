@@ -2,8 +2,7 @@ import 'package:Relife/core/app_export.dart';
 import 'package:Relife/presentation/challenge_page/challenge_page.dart';
 import 'package:Relife/widgets/custom_bottom_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:Relife/presentation/iphone_13_mini_twentyseven_screen/iphone_13_mini_twentyseven_screen.dart';
-import 'package:Relife/presentation/iphone_13_mini_twentysix_screen/iphone_13_mini_twentysix_screen.dart';
+
 import 'package:Relife/presentation/iphone_13_mini_twenty_screen/iphone_13_mini_twenty_screen.dart';
 import 'package:Relife/presentation/settings/settings.dart';
 
@@ -42,16 +41,13 @@ class ChallengeContainerScreen extends StatelessWidget {
   ///Handling route based on bottom click actions
   String getCurrentRoute(BottomBarEnum type) {
     switch (type) {
-      case BottomBarEnum.Notification:
-        return AppRoutes.iphone13MiniTwentysevenScreen;
       case BottomBarEnum.Reward:
         return AppRoutes.iphone13MiniTwentyScreen;
       case BottomBarEnum.Challenge:
         return AppRoutes.challengePage;
       case BottomBarEnum.Setting:
         return AppRoutes.SettingsScreen;
-      case BottomBarEnum.Home:
-        return AppRoutes.iphone13MiniTwentysixScreen;
+
       default:
         return "/";
     }
@@ -64,10 +60,7 @@ class ChallengeContainerScreen extends StatelessWidget {
         return ChallengePage();
       case AppRoutes.iphone13MiniTwentyScreen:
         return Iphone13MiniTwentyScreen();
-      case AppRoutes.iphone13MiniTwentysevenScreen:
-        return Iphone13MiniTwentysevenScreen();
-      case AppRoutes.iphone13MiniTwentysixScreen:
-        return Iphone13MiniTwentysixScreen();
+
       case AppRoutes.SettingsScreen:
         return MySettingsScreen();
       default:

@@ -5,12 +5,17 @@ import 'package:Relife/widgets/app_bar/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 
 // ignore_for_file: must_be_immutable
-class ChallengePage extends StatelessWidget {
+class ChallengePage extends StatefulWidget {
   const ChallengePage({Key? key})
       : super(
           key: key,
         );
 
+  @override
+  State<ChallengePage> createState() => _ChallengePageState();
+}
+
+class _ChallengePageState extends State<ChallengePage> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(

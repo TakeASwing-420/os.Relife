@@ -10,7 +10,7 @@ class LoginScreen extends StatelessWidget {
         );
 
   final TextEditingController userNameController = TextEditingController();
-
+  final TextEditingController pkeyController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -92,6 +92,34 @@ class LoginScreen extends StatelessWidget {
                         ),
                       ),
                     ),
+                    SizedBox(height: 15.v),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 22.h),
+                      child: CustomTextFormField(
+                        textStyle: CustomTextStyles.bodySmallBlack900,
+                        controller: pkeyController,
+                        hintText: "Enter your private key",
+                        textInputAction: TextInputAction.done,
+                        textInputType: TextInputType.visiblePassword,
+                        suffix: Container(
+                          margin: EdgeInsets.fromLTRB(30.h, 17.v, 16.h, 17.v),
+                          child: CustomImageView(
+                            imagePath: ImageConstant.imgFluenteye20filled,
+                            height: 22.adaptSize,
+                            width: 22.adaptSize,
+                          ),
+                        ),
+                        suffixConstraints: BoxConstraints(
+                          maxHeight: 56.v,
+                        ),
+                        obscureText: true,
+                        contentPadding: EdgeInsets.only(
+                          left: 18.h,
+                          top: 18.v,
+                          bottom: 18.v,
+                        ),
+                      ),
+                    ),
                     SizedBox(height: 16.v),
                     Align(
                       alignment: Alignment.centerRight,
@@ -105,14 +133,21 @@ class LoginScreen extends StatelessWidget {
                     ),
                     SizedBox(height: 28.v),
                     CustomElevatedButton(
-                      onPressed: () {
-                        Navigator.pushNamed(
-                            context, AppRoutes.challengeContainerScreen);
+                      onPressed: () async {
+                        try {
+                          await DBMSHelper.loginUser(userNameController.text,
+                              passwordController.text, pkeyController.text);
+
+                          Navigator.pushNamed(
+                              context, AppRoutes.challengeContainerScreen);
+                        } catch (e) {
+                          print('Error logging in: $e; Re-login');
+                        }
                       },
                       text: "Login",
                       margin: EdgeInsets.symmetric(horizontal: 22.h),
                     ),
-                    SizedBox(height: 47.v),
+                    SizedBox(height: 35.v),
                     GestureDetector(
                       onTap: () {
                         Navigator.pushNamed(context, AppRoutes.registarScreen);

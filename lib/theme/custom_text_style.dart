@@ -48,6 +48,7 @@ class CustomTextStyles {
   // Headline text style
   static get headlineLargeBlack900 => theme.textTheme.headlineLarge!.copyWith(
         color: appTheme.black900,
+        fontSize: 19.fSize,
       );
   // Label text style
   static get labelLarge12 => theme.textTheme.labelLarge!.copyWith(

@@ -301,7 +301,7 @@ class _MySettingsScreenState extends State<MySettingsScreen> {
             end: Alignment(0.59, 0.99),
             colors: [
               appTheme.whiteA700,
-              appTheme.red300,
+              appTheme.deepOrange500,
             ],
           ),
         ),

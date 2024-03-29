@@ -139,11 +139,14 @@ class RegistarScreen extends StatelessWidget {
         if (_formKey.currentState!.validate()) {
           String username = userNameController.text;
           String password = passwordController.text;
+          String confirm_pass = confirmPasswordController.text;
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) =>
-                  HomePage(username: username, password: password),
+              builder: (context) => HomePage(
+                  username: username,
+                  password: password,
+                  confirm_password: confirm_pass),
             ),
           );
         }

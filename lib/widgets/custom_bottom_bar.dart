@@ -25,20 +25,10 @@ class CustomBottomBarState extends State<CustomBottomBar> {
       type: BottomBarEnum.Reward,
     ),
     BottomMenuModel(
-      icon: ImageConstant.imgNoti,
-      activeIcon: ImageConstant.imgNoti,
-      type: BottomBarEnum.Notification,
-    ),
-    BottomMenuModel(
       icon: ImageConstant.imgSearchGray500,
       activeIcon: ImageConstant.imgSearchGray500,
       type: BottomBarEnum.Setting,
     ),
-    BottomMenuModel(
-      icon: ImageConstant.imgHome,
-      activeIcon: ImageConstant.imgHome,
-      type: BottomBarEnum.Home,
-    )
   ];
 
   @override
