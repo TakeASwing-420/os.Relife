@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:Relife/presentation/iphone_13_mini_twenty_screen/iphone_13_mini_twenty_screen.dart';
-import 'package:Relife/presentation/iphone_13_mini_twentythree_screen/iphone_13_mini_twentythree_screen.dart';
+import 'package:Relife/presentation/medical/medical.dart';
+import 'package:Relife/presentation/doctor_details/doctor_details.dart';
 import 'package:Relife/presentation/challenge_container_screen/challenge_container_screen.dart';
 import 'package:Relife/presentation/detail_page_challenge_screen/detail_page_challenge_screen.dart';
 
