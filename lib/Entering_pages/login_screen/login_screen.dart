@@ -2,16 +2,26 @@ import 'package:Relife/widgets/custom_text_form_field.dart';
 import 'package:Relife/widgets/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:Relife/core/app_export.dart';
+import 'package:flutter/services.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   LoginScreen({Key? key})
       : super(
           key: key,
         );
 
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController userNameController = TextEditingController();
+
   final TextEditingController pkeyController = TextEditingController();
+
   final TextEditingController passwordController = TextEditingController();
+
+  late SnackBar snackBar;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -140,8 +150,20 @@ class LoginScreen extends StatelessWidget {
 
                           Navigator.pushNamed(
                               context, AppRoutes.challengeContainerScreen);
-                        } catch (e) {
-                          print('Error logging in: $e; Re-login');
+                        } catch (error) {
+                          final errorMessage = error.toString().substring(11);
+                          snackBar = SnackBar(
+                            elevation: 20.v,
+                            content: Text(
+                              '$errorMessage',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w700),
+                            ),
+                            backgroundColor: Colors.orange,
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                          Navigator.of(context).pop();
                         }
                       },
                       text: "Login",
