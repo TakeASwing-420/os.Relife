@@ -147,7 +147,18 @@ class _LoginScreenState extends State<LoginScreen> {
                         try {
                           await DBMSHelper.loginUser(userNameController.text,
                               passwordController.text, pkeyController.text);
-
+                          final hi = userNameController.text;
+                          snackBar = SnackBar(
+                            elevation: 20.v,
+                            content: Text(
+                              'Welcome, $hi',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w700),
+                            ),
+                            backgroundColor: Colors.orange,
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
                           Navigator.pushNamed(
                               context, AppRoutes.challengeContainerScreen);
                         } catch (error) {
