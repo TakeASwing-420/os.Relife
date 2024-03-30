@@ -95,6 +95,7 @@ class RegistarScreen extends StatelessWidget {
       child: CustomTextFormField(
         textStyle: CustomTextStyles.bodySmallBlack900,
         controller: userNameController,
+        autofocus: false,
         hintText: "Username",
         borderDecoration: TextFormFieldStyleHelper.outlineIndigo,
         fillColor: appTheme.gray50,
@@ -108,6 +109,7 @@ class RegistarScreen extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 22.h),
       child: CustomTextFormField(
         textStyle: CustomTextStyles.bodySmallBlack900,
+        autofocus: false,
         controller: passwordController,
         hintText: "Password",
         textInputType: TextInputType.visiblePassword,
@@ -122,6 +124,7 @@ class RegistarScreen extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 22.h),
       child: CustomTextFormField(
         textStyle: CustomTextStyles.bodySmallBlack900,
+        autofocus: false,
         controller: confirmPasswordController,
         hintText: "Confirm password",
         textInputAction: TextInputAction.done,

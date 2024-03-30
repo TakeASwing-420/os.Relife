@@ -2,7 +2,7 @@ import 'widgets/profilesection_item_widget.dart';
 import 'package:Relife/core/app_export.dart';
 import 'package:Relife/widgets/custom_search_view.dart';
 import 'package:flutter/material.dart';
-import 'package:Relife/presentation/doctor_details/doctor_details.dart';
+import 'package:Relife/my_app/doctor_details/doctor_details.dart';
 
 // ignore_for_file: must_be_immutable
 class Iphone13MiniTwentyScreen extends StatelessWidget {

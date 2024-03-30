@@ -1,10 +1,10 @@
 import 'package:Relife/core/app_export.dart';
-import 'package:Relife/presentation/challenge_page/challenge_page.dart';
+import 'package:Relife/my_app/challenge_page/challenge_page.dart';
 import 'package:Relife/widgets/custom_bottom_bar.dart';
 import 'package:flutter/material.dart';
 
-import 'package:Relife/presentation/medical/medical.dart';
-import 'package:Relife/presentation/settings/settings.dart';
+import 'package:Relife/my_app/medical/medical.dart';
+import 'package:Relife/my_app/settings/settings.dart';
 
 // ignore_for_file: must_be_immutable
 class ChallengeContainerScreen extends StatelessWidget {

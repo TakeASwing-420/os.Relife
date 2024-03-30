@@ -68,11 +68,24 @@ class _HomePageState extends State<HomePage> {
       final errorMessage = error.toString().substring(11);
       snackBar = SnackBar(
         elevation: 20.v,
-        content: Text(
-          '$errorMessage',
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
+        content: Row(
+          children: [
+            Expanded(
+              child: Icon(
+                Icons.error_outline,
+                size: 35.adaptSize,
+                color: Colors.white,
+              ),
+            ),
+            SizedBox(width: 5.h),
+            Text(
+              '$errorMessage',
+              style:
+                  TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
+            ),
+          ],
         ),
-        backgroundColor: Colors.orange,
+        backgroundColor: Colors.deepOrange,
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
       Navigator.of(context).pop();
@@ -86,10 +99,21 @@ class _HomePageState extends State<HomePage> {
       content: Row(
         children: [
           Expanded(
-            child: Text(
-              'Your private key is $_privateKey',
-              style:
-                  TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'Your private key is $_privateKey',
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.w700),
+                ),
+                Text(
+                  'Keep this key very safe',
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.w700),
+                ),
+              ],
             ),
           ),
           TextButton(

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import 'package:Relife/presentation/medical/medical.dart';
-import 'package:Relife/presentation/doctor_details/doctor_details.dart';
-import 'package:Relife/presentation/challenge_container_screen/challenge_container_screen.dart';
-import 'package:Relife/presentation/detail_page_challenge_screen/detail_page_challenge_screen.dart';
+import 'package:Relife/my_app/medical/medical.dart';
+import 'package:Relife/my_app/doctor_details/doctor_details.dart';
+import 'package:Relife/my_app/challenge_container_screen/challenge_container_screen.dart';
+import 'package:Relife/my_app/detail_page_challenge_screen/detail_page_challenge_screen.dart';
 
-import 'package:Relife/presentation/settings/settings.dart';
+import 'package:Relife/my_app/settings/settings.dart';
 
 import 'package:Relife/Entering_pages/splashscreen_screen/splashscreen_screen.dart';
 import 'package:Relife/Entering_pages/registar_screen/registar_screen.dart';

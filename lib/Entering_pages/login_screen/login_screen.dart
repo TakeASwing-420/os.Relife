@@ -68,6 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: CustomTextFormField(
                         textStyle: CustomTextStyles.bodySmallBlack900,
                         controller: userNameController,
+                        autofocus: false,
                         hintText: "Enter your username",
                         borderDecoration:
                             TextFormFieldStyleHelper.outlineIndigo,
@@ -81,6 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         textStyle: CustomTextStyles.bodySmallBlack900,
                         controller: passwordController,
                         hintText: "Enter your password",
+                        autofocus: false,
                         textInputAction: TextInputAction.done,
                         textInputType: TextInputType.visiblePassword,
                         suffix: Container(
@@ -109,6 +111,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         textStyle: CustomTextStyles.bodySmallBlack900,
                         controller: pkeyController,
                         hintText: "Enter your private key",
+                        autofocus: false,
                         textInputAction: TextInputAction.done,
                         textInputType: TextInputType.visiblePassword,
                         suffix: Container(
@@ -130,17 +133,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 16.v),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: Padding(
-                        padding: EdgeInsets.only(right: 22.h),
-                        child: Text(
-                          "Forgot Password?",
-                          style: CustomTextStyles.titleSmallOnPrimaryContainer,
-                        ),
-                      ),
-                    ),
                     SizedBox(height: 28.v),
                     CustomElevatedButton(
                       onPressed: () async {
@@ -151,12 +143,13 @@ class _LoginScreenState extends State<LoginScreen> {
                           snackBar = SnackBar(
                             elevation: 20.v,
                             content: Text(
-                              'Welcome, $hi',
+                              'Welcome, $hi 😊',
                               style: TextStyle(
                                   color: Colors.white,
-                                  fontWeight: FontWeight.w700),
+                                  fontWeight: FontWeight.w700,
+                                  fontFamily: "new"),
                             ),
-                            backgroundColor: Colors.orange,
+                            backgroundColor: Colors.deepOrange,
                           );
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
                           Navigator.pushNamed(
@@ -165,13 +158,25 @@ class _LoginScreenState extends State<LoginScreen> {
                           final errorMessage = error.toString().substring(11);
                           snackBar = SnackBar(
                             elevation: 20.v,
-                            content: Text(
-                              '$errorMessage',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w700),
+                            content: Row(
+                              children: [
+                                Expanded(
+                                  child: Icon(
+                                    Icons.error_outline,
+                                    size: 35.adaptSize,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                SizedBox(width: 5.h),
+                                Text(
+                                  '$errorMessage',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                              ],
                             ),
-                            backgroundColor: Colors.orange,
+                            backgroundColor: Colors.deepOrange,
                           );
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
                           Navigator.of(context).pop();
