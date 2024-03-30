@@ -39,21 +39,4 @@ class DBMSHelper {
       throw Exception(data['error']);
     }
   }
-
-  static Future<void> balance_unlimited(String username) async {
-    final url = Uri.parse('$baseUrl/login');
-    final response = await http.post(
-      url,
-      headers: {"Content-Type": "application/json"},
-      body: jsonEncode({'username': username}),
-    );
-
-    if (response.statusCode != 200) {
-      throw Exception('Failed to login user: ${response.body}');
-    } else {
-      final data = jsonDecode(response.body);
-      return data['_balance'];
-      //hetyui
-    }
-  }
 }
