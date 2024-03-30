@@ -23,7 +23,7 @@ class _HomePageState extends State<HomePage> {
   late W3MService _w3mService;
   late SnackBar snackBar;
   bool _registering = false;
-  String? _privateKey;
+  String? _privateKey, access_token, _username;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -54,14 +54,18 @@ class _HomePageState extends State<HomePage> {
     try {
       setState(() {
         _registering = true;
+        _username = widget.username;
       });
-      _privateKey = await DBMSHelper.registerUser(
+      final registrationResult = await DBMSHelper.registerUser(
         widget.username,
         widget.password,
         widget.confirm_password,
         _w3mService.address!,
       );
-
+      _privateKey = registrationResult['private_key'];
+      access_token = registrationResult['token'];
+      await DBMSHelper.storeAccessToken(access_token!);
+      await DBMSHelper.storeUserName(_username!);
       _showPrivateKeySnackbar();
       return true;
     } catch (error) {
@@ -98,7 +102,8 @@ class _HomePageState extends State<HomePage> {
       elevation: 20.v,
       content: Row(
         children: [
-          Expanded(
+          Padding(
+            padding: EdgeInsets.all(5.h),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               mainAxisSize: MainAxisSize.min,
@@ -116,6 +121,7 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
+          SizedBox(width: 8.h),
           TextButton(
             onPressed: () async {
               Clipboard.setData(ClipboardData(text: _privateKey!));

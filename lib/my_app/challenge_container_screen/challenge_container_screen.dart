@@ -2,33 +2,44 @@ import 'package:Relife/core/app_export.dart';
 import 'package:Relife/my_app/challenge_page/challenge_page.dart';
 import 'package:Relife/widgets/custom_bottom_bar.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter/services.dart';
 import 'package:Relife/my_app/medical/medical.dart';
 import 'package:Relife/my_app/settings/settings.dart';
 
-// ignore_for_file: must_be_immutable
-class ChallengeContainerScreen extends StatelessWidget {
+class ChallengeContainerScreen extends StatefulWidget {
   ChallengeContainerScreen({Key? key}) : super(key: key);
 
+  @override
+  State<ChallengeContainerScreen> createState() =>
+      _ChallengeContainerScreenState();
+}
+
+class _ChallengeContainerScreenState extends State<ChallengeContainerScreen> {
   GlobalKey<NavigatorState> navigatorKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
-            extendBody: true,
-            extendBodyBehindAppBar: true,
-            body: Container(
-                width: SizeUtils.width,
-                height: SizeUtils.height,
-                child: Navigator(
-                    key: navigatorKey,
-                    initialRoute: AppRoutes.challengePage,
-                    onGenerateRoute: (routeSetting) => PageRouteBuilder(
-                        pageBuilder: (ctx, ani, ani1) =>
-                            getCurrentPage(routeSetting.name!),
-                        transitionDuration: Duration(seconds: 0)))),
-            bottomNavigationBar: _buildBottomBar(context)));
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (didPop) {
+        SystemNavigator.pop();
+      },
+      child: SafeArea(
+          child: Scaffold(
+              extendBody: true,
+              extendBodyBehindAppBar: true,
+              body: Container(
+                  width: SizeUtils.width,
+                  height: SizeUtils.height,
+                  child: Navigator(
+                      key: navigatorKey,
+                      initialRoute: AppRoutes.challengePage,
+                      onGenerateRoute: (routeSetting) => PageRouteBuilder(
+                          pageBuilder: (ctx, ani, ani1) =>
+                              getCurrentPage(routeSetting.name!),
+                          transitionDuration: Duration(seconds: 0)))),
+              bottomNavigationBar: _buildBottomBar(context))),
+    );
   }
 
   /// Section Widget

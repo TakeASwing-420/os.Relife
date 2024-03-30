@@ -5,9 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:Relife/my_app/doctor_details/doctor_details.dart';
 
 // ignore_for_file: must_be_immutable
-class Iphone13MiniTwentyScreen extends StatelessWidget {
+class Iphone13MiniTwentyScreen extends StatefulWidget {
   Iphone13MiniTwentyScreen({Key? key}) : super(key: key);
 
+  @override
+  State<Iphone13MiniTwentyScreen> createState() =>
+      _Iphone13MiniTwentyScreenState();
+}
+
+class _Iphone13MiniTwentyScreenState extends State<Iphone13MiniTwentyScreen> {
   TextEditingController searchController = TextEditingController();
 
   @override

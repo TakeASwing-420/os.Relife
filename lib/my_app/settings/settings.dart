@@ -289,6 +289,38 @@ class _MySettingsScreenState extends State<MySettingsScreen> {
     );
   }
 
+  Future<dynamic> signOut(BuildContext context, String Title) {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            Title,
+            style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+          ),
+          content: Text("Sign Out from your account"),
+          actions: [
+            TextButton(
+              child: Text("Close"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            Spacer(),
+            TextButton(
+              child: Text("OK"),
+              onPressed: () async {
+                await DBMSHelper.deleteAccessToken();
+                await DBMSHelper.deleteUser();
+                Navigator.pushNamed(context, AppRoutes.loginScreen);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -382,12 +414,26 @@ class _MySettingsScreenState extends State<MySettingsScreen> {
                 },
               ),
             ),
+            ListTile(
+              title: Text("Sign Out",
+                  style: TextStyle(color: Colors.black87, fontSize: 22)),
+              trailing: IconButton(
+                icon: Icon(
+                  Icons.power_settings_new,
+                  size: 30,
+                  color: Colors.black,
+                ),
+                onPressed: () {
+                  signOut(context, "Sign Out");
+                },
+              ),
+            ),
             Center(
               child: Padding(
                 padding: EdgeInsets.all(20),
                 child: ImageBuilderAnimation(
                   imageAssetPath: ImageConstant.imgFrame622,
-                  RADIUS: 110,
+                  RADIUS: 99,
                 ),
               ),
             ),
