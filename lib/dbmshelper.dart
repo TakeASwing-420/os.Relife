@@ -95,4 +95,24 @@ class DBMSHelper {
       throw Exception(data['error']);
     }
   }
+
+  static Future<String> getCoins() async {
+    final String? username = await getUserName();
+    final url = Uri.parse('$baseUrl/balance');
+    final response = await http.post(
+      url,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: jsonEncode({'username': username}),
+    );
+
+    final data = jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+      return data['_balance'];
+    } else {
+      throw Exception(data['error']);
+    }
+  }
 }

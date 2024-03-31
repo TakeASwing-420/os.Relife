@@ -4,7 +4,18 @@ import 'package:Relife/widgets/custom_search_view.dart';
 import 'package:flutter/material.dart';
 import 'package:Relife/my_app/doctor_details/doctor_details.dart';
 
-// ignore_for_file: must_be_immutable
+class UserProfileItemData {
+  final String imagePath;
+  final String name;
+  final int creditScore;
+
+  UserProfileItemData({
+    required this.imagePath,
+    required this.name,
+    required this.creditScore,
+  });
+}
+
 class Iphone13MiniTwentyScreen extends StatefulWidget {
   Iphone13MiniTwentyScreen({Key? key}) : super(key: key);
 
@@ -15,6 +26,54 @@ class Iphone13MiniTwentyScreen extends StatefulWidget {
 
 class _Iphone13MiniTwentyScreenState extends State<Iphone13MiniTwentyScreen> {
   TextEditingController searchController = TextEditingController();
+
+  late SnackBar snackBar;
+  late String userBalance;
+
+  @override
+  void initState() {
+    super.initState();
+    userBalance = '0';
+    fetchUserBalance();
+  }
+
+  Future<void> fetchUserBalance() async {
+    try {
+      final String balance = await DBMSHelper.getCoins();
+      setState(() {
+        userBalance = balance;
+      });
+    } catch (error) {
+      setState(() {
+        userBalance = "Error";
+      });
+      final errorMessage = error.toString().substring(11);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          elevation: 20.v,
+          content: Row(
+            children: [
+              SizedBox(width: 5.h),
+              Icon(
+                Icons.error_outline,
+                size: 35.adaptSize,
+                color: Colors.white,
+              ),
+              SizedBox(width: 5.h),
+              Text(
+                '$errorMessage',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ],
+          ),
+          backgroundColor: Colors.deepOrange,
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +103,7 @@ class _Iphone13MiniTwentyScreenState extends State<Iphone13MiniTwentyScreen> {
                                       child: SingleChildScrollView(
                                         child: Column(children: [
                                           SizedBox(height: 28.v),
-                                          coin_display(),
+                                          coinDisplay(),
                                           _buildLetsFindServiceSection(context),
                                           SizedBox(height: 13.v),
                                           CustomSearchView(
@@ -52,7 +111,7 @@ class _Iphone13MiniTwentyScreenState extends State<Iphone13MiniTwentyScreen> {
                                               hintText: "Search"),
                                           SizedBox(height: 72.v),
                                           _buildUserProfileSection(context),
-                                          SizedBox(height: 42.v),
+                                          SizedBox(height: 155.v),
                                         ]),
                                       ))),
                               _buildFilterSection(context)
@@ -74,7 +133,7 @@ class _Iphone13MiniTwentyScreenState extends State<Iphone13MiniTwentyScreen> {
                   child: Text("Lets find a \nservice provider",
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: theme.textTheme.headlineMedium))),
+                      style: theme.textTheme.headlineSmall))),
           CustomImageView(
               imagePath: ImageConstant.imgImage6,
               height: 40.adaptSize,
@@ -86,55 +145,92 @@ class _Iphone13MiniTwentyScreenState extends State<Iphone13MiniTwentyScreen> {
 
   /// Section Widget
   Widget _buildUserProfileSection(BuildContext context) {
+    List<UserProfileItemData> userData = [
+      UserProfileItemData(
+        imagePath: ImageConstant.imgFrame62,
+        name: 'Dr. Alan Smith',
+        creditScore: 2000,
+      ),
+      UserProfileItemData(
+        imagePath: ImageConstant.imgFrame621,
+        name: 'Dr. Marcus Aminoff',
+        creditScore: 2500,
+      ),
+      UserProfileItemData(
+        imagePath: ImageConstant.imgFrame623,
+        name: 'Dr. John Doe',
+        creditScore: 3500,
+      ),
+      UserProfileItemData(
+        imagePath: ImageConstant.imgFrame6240x40,
+        name: 'Dr. Rachelle Sedith',
+        creditScore: 2500,
+      ),
+    ];
+
     return ListView.separated(
-        physics: NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
-        separatorBuilder: (context, index) {
-          return SizedBox(height: 4.v);
-        },
-        itemCount: 5,
-        itemBuilder: (context, index) {
-          return UserprofilesectionItemWidget(onTapUserProfile: () {
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      separatorBuilder: (context, index) {
+        return SizedBox(height: 4.v);
+      },
+      itemCount: userData.length,
+      itemBuilder: (context, index) {
+        UserProfileItemData data = userData[index];
+        return UserprofilesectionItemWidget(
+          imagePath: data.imagePath,
+          name: data.name,
+          creditScore: data.creditScore,
+          onTapUserProfile: () {
             onTapUserProfile(context);
-          });
-        });
+          },
+        );
+      },
+    );
   }
 
-  Row coin_display() {
+  Widget coinDisplay() {
     return Row(
       children: [
         Spacer(),
         Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(50.adaptSize),
-              color: Colors.white,
-            ),
-            margin: EdgeInsets.only(top: 40.h, right: 9.v),
-            height: 40.v,
-            width: 135.h,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 3.v),
-                  child: CircleAvatar(
-                    backgroundImage: AssetImage(ImageConstant.coin),
-                    radius: 22.adaptSize,
-                  ),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(50.adaptSize),
+            color: Colors.white,
+          ),
+          margin: EdgeInsets.only(top: 40.h, right: 12.v),
+          height: 40.v,
+          width: 171.h,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 3.v, horizontal: 8.h),
+                child: CircleAvatar(
+                  backgroundImage: AssetImage(ImageConstant.coin),
+                  radius: 22.adaptSize,
                 ),
-                SizedBox(width: 18.h),
-                Padding(
-                  padding: EdgeInsets.only(right: 8.h),
-                  child: Text(
-                    '13,307',
-                    style: TextStyle(
-                      fontSize: 16.fSize,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(right: 8.h),
+                child: TweenAnimationBuilder<int>(
+                  duration: Duration(milliseconds: 1500),
+                  tween:
+                      IntTween(begin: 0, end: int.tryParse(userBalance) ?? 0),
+                  builder: (context, value, _) {
+                    return Text(
+                      value.toString(),
+                      style: TextStyle(
+                        fontSize: 16.fSize,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    );
+                  },
                 ),
-              ],
-            ))
+              ),
+            ],
+          ),
+        ),
       ],
     );
   }

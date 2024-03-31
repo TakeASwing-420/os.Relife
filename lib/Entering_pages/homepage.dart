@@ -74,12 +74,11 @@ class _HomePageState extends State<HomePage> {
         elevation: 20.v,
         content: Row(
           children: [
-            Expanded(
-              child: Icon(
-                Icons.error_outline,
-                size: 35.adaptSize,
-                color: Colors.white,
-              ),
+            SizedBox(width: 5.h),
+            Icon(
+              Icons.error_outline,
+              size: 35.adaptSize,
+              color: Colors.white,
             ),
             SizedBox(width: 5.h),
             Text(

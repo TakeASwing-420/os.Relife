@@ -3,12 +3,15 @@ import 'package:Relife/widgets/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:Relife/my_app/detail_page_challenge_screen/detail_page_challenge_screen.dart';
 
-// ignore: must_be_immutable
 class ChallengelistItemWidget extends StatelessWidget {
-  const ChallengelistItemWidget({Key? key})
-      : super(
-          key: key,
-        );
+  final String imagePath;
+  final int creditScore;
+
+  const ChallengelistItemWidget({
+    Key? key,
+    required this.imagePath,
+    required this.creditScore,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -45,12 +48,10 @@ class ChallengelistItemWidget extends StatelessWidget {
                     alignment: Alignment.bottomLeft,
                     children: [
                       CustomImageView(
-                        imagePath: ImageConstant.img1616Logo,
+                        imagePath: imagePath,
                         height: 100.adaptSize,
                         width: 100.adaptSize,
-                        radius: BorderRadius.circular(
-                          4.h,
-                        ),
+                        radius: BorderRadius.circular(4.h),
                         alignment: Alignment.center,
                       ),
                       Align(
@@ -104,10 +105,32 @@ class ChallengelistItemWidget extends StatelessWidget {
                 ),
                 SizedBox(height: 3.v),
                 Text(
-                  "Ends on Dec 2023",
+                  "Ends on June 2024",
                   style: CustomTextStyles.labelMediumDeeporange500,
                 ),
                 SizedBox(height: 4.v),
+                RichText(
+                  text: TextSpan(
+                    text: 'Credits Pts: ',
+                    style: TextStyle(
+                      color: appTheme.black900,
+                      fontSize: 15.fSize,
+                      fontWeight: FontWeight.bold,
+                      fontStyle: FontStyle.normal,
+                    ),
+                    children: [
+                      TextSpan(
+                        text: '$creditScore',
+                        style: TextStyle(
+                          color: appTheme.gray800,
+                          fontStyle: FontStyle.normal,
+                          fontSize: 13.fSize,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 3.v),
                 Text(
                   "Ride with Rivelo",
                   style: theme.textTheme.labelMedium,
@@ -118,8 +141,7 @@ class ChallengelistItemWidget extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>
-                            DetailPageChallengeScreen(), // Replace DetailPage with your desired destination widget
+                        builder: (context) => DetailPageChallengeScreen(),
                       ),
                     );
                   },

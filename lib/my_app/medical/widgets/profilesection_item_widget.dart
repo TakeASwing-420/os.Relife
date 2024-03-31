@@ -3,8 +3,15 @@ import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class UserprofilesectionItemWidget extends StatelessWidget {
+  final String imagePath;
+  final String name;
+  final int creditScore;
+
   UserprofilesectionItemWidget({
     Key? key,
+    required this.imagePath,
+    required this.creditScore,
+    required this.name,
     this.onTapUserProfile,
   }) : super(
           key: key,
@@ -36,7 +43,7 @@ class UserprofilesectionItemWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     CustomImageView(
-                      imagePath: ImageConstant.imgFrame62,
+                      imagePath: imagePath,
                       height: 40.adaptSize,
                       width: 40.adaptSize,
                       radius: BorderRadius.circular(
@@ -50,7 +57,7 @@ class UserprofilesectionItemWidget extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Dr. Marcus Aminoff",
+                            name,
                             style: theme.textTheme.titleMedium,
                           ),
                           SizedBox(height: 5.v),
@@ -62,6 +69,26 @@ class UserprofilesectionItemWidget extends StatelessWidget {
                           Text(
                             "Chelsea and Westminster Hospital",
                             style: theme.textTheme.labelLarge,
+                          ),
+                          SizedBox(height: 4.v),
+                          RichText(
+                            text: TextSpan(
+                              text: 'Credits Pts: ',
+                              style: TextStyle(
+                                  color: appTheme.black900,
+                                  fontSize: 15.fSize,
+                                  fontWeight: FontWeight.bold,
+                                  fontStyle: FontStyle.normal),
+                              children: [
+                                TextSpan(
+                                  text: '$creditScore',
+                                  style: TextStyle(
+                                      color: appTheme.gray800,
+                                      fontSize: 13.fSize,
+                                      fontStyle: FontStyle.normal),
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),

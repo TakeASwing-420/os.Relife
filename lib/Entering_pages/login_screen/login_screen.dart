@@ -169,12 +169,11 @@ class _LoginScreenState extends State<LoginScreen> {
                               elevation: 20.v,
                               content: Row(
                                 children: [
-                                  Expanded(
-                                    child: Icon(
-                                      Icons.error_outline,
-                                      size: 35.adaptSize,
-                                      color: Colors.white,
-                                    ),
+                                  SizedBox(width: 5.h),
+                                  Icon(
+                                    Icons.error_outline,
+                                    size: 35.adaptSize,
+                                    color: Colors.white,
                                   ),
                                   SizedBox(width: 5.h),
                                   Text(
@@ -189,7 +188,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             );
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(snackBar);
-                            Navigator.of(context).pop();
                           }
                         },
                         text: "Login",

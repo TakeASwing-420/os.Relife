@@ -4,18 +4,61 @@ import 'package:Relife/widgets/app_bar/appbar_title.dart';
 import 'package:Relife/widgets/app_bar/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 
-// ignore_for_file: must_be_immutable
 class ChallengePage extends StatefulWidget {
-  const ChallengePage({Key? key})
-      : super(
-          key: key,
-        );
+  const ChallengePage({Key? key}) : super(key: key);
 
   @override
   State<ChallengePage> createState() => _ChallengePageState();
 }
 
 class _ChallengePageState extends State<ChallengePage> {
+  late String userBalance;
+
+  @override
+  void initState() {
+    super.initState();
+    userBalance = '0';
+    fetchUserBalance();
+  }
+
+  Future<void> fetchUserBalance() async {
+    try {
+      final String balance = await DBMSHelper.getCoins();
+      setState(() {
+        userBalance = balance;
+      });
+    } catch (error) {
+      setState(() {
+        userBalance = "Error";
+      });
+      final errorMessage = error.toString().substring(11);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          elevation: 20.v,
+          content: Row(
+            children: [
+              SizedBox(width: 5.h),
+              Icon(
+                Icons.error_outline,
+                size: 35.adaptSize,
+                color: Colors.white,
+              ),
+              SizedBox(width: 5.h),
+              Text(
+                '$errorMessage',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ],
+          ),
+          backgroundColor: Colors.deepOrange,
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -31,10 +74,7 @@ class _ChallengePageState extends State<ChallengePage> {
             gradient: LinearGradient(
               begin: Alignment(0.13, 0.05),
               end: Alignment(0.59, 0.99),
-              colors: [
-                appTheme.red300,
-                appTheme.gray300,
-              ],
+              colors: [appTheme.red300, appTheme.gray300],
             ),
           ),
           child: Container(
@@ -45,8 +85,42 @@ class _ChallengePageState extends State<ChallengePage> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   SizedBox(height: 16.v),
-                  coin_display(),
-                  _buildChallengeList(context),
+                  coinDisplay(),
+                  SizedBox(height: 20.v),
+                  ChallengelistItemWidget(
+                    creditScore: 2000,
+                    imagePath: ImageConstant.img1669Logo385x375,
+                  ),
+                  SizedBox(height: 8.v),
+                  ChallengelistItemWidget(
+                    creditScore: 500,
+                    imagePath: ImageConstant.img1669Logo,
+                  ),
+                  SizedBox(height: 8.v),
+                  ChallengelistItemWidget(
+                    creditScore: 500,
+                    imagePath: ImageConstant.img1616Logo,
+                  ),
+                  SizedBox(height: 8.v),
+                  ChallengelistItemWidget(
+                    creditScore: 1000,
+                    imagePath: ImageConstant.img1669Logo385x375,
+                  ),
+                  SizedBox(height: 8.v),
+                  ChallengelistItemWidget(
+                    creditScore: 500,
+                    imagePath: ImageConstant.img1759Logo,
+                  ),
+                  SizedBox(height: 8.v),
+                  ChallengelistItemWidget(
+                    creditScore: 100,
+                    imagePath: ImageConstant.img1669Logo385x375,
+                  ),
+                  SizedBox(height: 8.v),
+                  ChallengelistItemWidget(
+                    creditScore: 200,
+                    imagePath: ImageConstant.img1759Logo,
+                  ),
                   SizedBox(height: 16.v),
                 ],
               ),
@@ -57,74 +131,57 @@ class _ChallengePageState extends State<ChallengePage> {
     );
   }
 
-  Row coin_display() {
+  Widget coinDisplay() {
     return Row(
       children: [
         Spacer(),
         Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(50.adaptSize),
-              color: Colors.white,
-            ),
-            margin: EdgeInsets.only(top: 40.h, right: 12.v),
-            height: 40.v,
-            width: 135.h,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 3.v),
-                  child: CircleAvatar(
-                    backgroundImage: AssetImage(ImageConstant.coin),
-                    radius: 22.adaptSize,
-                  ),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(50.adaptSize),
+            color: Colors.white,
+          ),
+          margin: EdgeInsets.only(top: 40.h, right: 12.v),
+          height: 40.v,
+          width: 171.h,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 3.v, horizontal: 8.h),
+                child: CircleAvatar(
+                  backgroundImage: AssetImage(ImageConstant.coin),
+                  radius: 22.adaptSize,
                 ),
-                SizedBox(width: 18.h),
-                Padding(
-                  padding: EdgeInsets.only(right: 8.h),
-                  child: Text(
-                    '13,307',
-                    style: TextStyle(
-                      fontSize: 16.fSize,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(right: 8.h),
+                child: TweenAnimationBuilder<int>(
+                  duration: Duration(milliseconds: 1500),
+                  tween:
+                      IntTween(begin: 0, end: int.tryParse(userBalance) ?? 0),
+                  builder: (context, value, _) {
+                    return Text(
+                      value.toString(),
+                      style: TextStyle(
+                        fontSize: 16.fSize,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    );
+                  },
                 ),
-              ],
-            ))
+              ),
+            ],
+          ),
+        ),
       ],
     );
   }
 
-  /// Section Widget
   PreferredSizeWidget _buildAppBar(BuildContext context) {
     return CustomAppBar(
       centerTitle: true,
       title: AppbarTitle(
         text: "Challenges",
-      ),
-    );
-  }
-
-  /// Section Widget
-  Widget _buildChallengeList(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(left: 8.h, right: 8.h),
-      child: ListView.separated(
-        physics: NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
-        separatorBuilder: (
-          context,
-          index,
-        ) {
-          return SizedBox(
-            height: 8.v,
-          );
-        },
-        itemCount: 8,
-        itemBuilder: (context, index) {
-          return ChallengelistItemWidget();
-        },
       ),
     );
   }
