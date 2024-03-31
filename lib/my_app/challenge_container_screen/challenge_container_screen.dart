@@ -16,13 +16,42 @@ class ChallengeContainerScreen extends StatefulWidget {
 
 class _ChallengeContainerScreenState extends State<ChallengeContainerScreen> {
   GlobalKey<NavigatorState> navigatorKey = GlobalKey();
+  Future<dynamic> close_it(BuildContext context, String Title) {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            Title,
+            style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+          ),
+          content: Text("Are you sure you want to exit?"),
+          actions: [
+            TextButton(
+              child: Text("Cancel"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            Spacer(),
+            TextButton(
+              child: Text("OK"),
+              onPressed: () {
+                SystemNavigator.pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return PopScope(
       canPop: false,
       onPopInvoked: (didPop) {
-        SystemNavigator.pop();
+        close_it(context, "Exit");
       },
       child: SafeArea(
           child: Scaffold(

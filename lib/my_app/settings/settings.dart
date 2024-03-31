@@ -149,7 +149,7 @@ class _MySettingsScreenState extends State<MySettingsScreen> {
           ),
           actions: [
             TextButton(
-              child: Text("Close"),
+              child: Text("Cancel"),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -242,7 +242,7 @@ class _MySettingsScreenState extends State<MySettingsScreen> {
           ),
           actions: [
             TextButton(
-              child: Text("Close"),
+              child: Text("Cancel"),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -273,7 +273,7 @@ class _MySettingsScreenState extends State<MySettingsScreen> {
               "This is the update avatar dialog. After that re-enter into the app to apply changes"),
           actions: [
             TextButton(
-              child: Text("Close"),
+              child: Text("Cancel"),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -301,7 +301,7 @@ class _MySettingsScreenState extends State<MySettingsScreen> {
           content: Text("Sign Out from your account"),
           actions: [
             TextButton(
-              child: Text("Close"),
+              child: Text("Cancel"),
               onPressed: () {
                 Navigator.of(context).pop();
               },
