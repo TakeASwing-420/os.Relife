@@ -15,16 +15,12 @@ class AppRoutes {
   static const String iphone13MiniTwentyScreen =
       '/iphone_13_mini_twenty_screen';
 
-  static const String iphone13MiniTwentythreeScreen =
-      '/iphone_13_mini_twentythree_screen';
-
   static const String challengePage = '/challenge_page';
 
   static const String challengeContainerScreen = '/challenge_container_screen';
 
   static const String SettingsScreen = '/settings';
 
-  static const String detailpage = '/detail';
   static const String splashscreenScreen = '/splash_screen';
 
   static const String loginScreen = '/login_screen';
@@ -33,10 +29,8 @@ class AppRoutes {
 
   static Map<String, WidgetBuilder> routes = {
     iphone13MiniTwentyScreen: (context) => Iphone13MiniTwentyScreen(),
-    iphone13MiniTwentythreeScreen: (context) => Iphone13MiniTwentythreeScreen(),
     challengeContainerScreen: (context) => ChallengeContainerScreen(),
     SettingsScreen: (context) => MySettingsScreen(),
-    detailpage: (context) => DetailPageChallengeScreen(),
     splashscreenScreen: (context) => SplashScreen(),
     loginScreen: (context) => LoginScreen(),
     registarScreen: (context) => RegistarScreen(),

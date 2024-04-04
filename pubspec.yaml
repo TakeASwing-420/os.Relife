@@ -6,6 +6,7 @@ environment:
 dependencies: 
   flutter: 
     sdk: flutter
+  confetti: any
   cached_network_image: ^3.3.0
   flutter_svg: ^2.0.9
   outline_gradient_button: ^2.0.1+1
@@ -17,7 +18,7 @@ dependencies:
   walletconnect_dart: ^0.0.11
   web3dart: ^2.7.1
   web3modal_flutter: ^3.0.1
-  slider_button: ^2.1.0
+
 dev_dependencies: 
   flutter_test: 
     sdk: flutter

@@ -3,16 +3,25 @@ import 'package:Relife/widgets/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:Relife/my_app/detail_page_challenge_screen/detail_page_challenge_screen.dart';
 
-class ChallengelistItemWidget extends StatelessWidget {
+class ChallengelistItemWidget extends StatefulWidget {
   final String imagePath;
   final int creditScore;
+  final bool isActive;
+  final int challengeIndex;
+  const ChallengelistItemWidget(
+      {Key? key,
+      required this.imagePath,
+      required this.isActive,
+      required this.creditScore,
+      required this.challengeIndex})
+      : super(key: key);
 
-  const ChallengelistItemWidget({
-    Key? key,
-    required this.imagePath,
-    required this.creditScore,
-  }) : super(key: key);
+  @override
+  State<ChallengelistItemWidget> createState() =>
+      _ChallengelistItemWidgetState();
+}
 
+class _ChallengelistItemWidgetState extends State<ChallengelistItemWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -48,7 +57,7 @@ class ChallengelistItemWidget extends StatelessWidget {
                     alignment: Alignment.bottomLeft,
                     children: [
                       CustomImageView(
-                        imagePath: imagePath,
+                        imagePath: widget.imagePath,
                         height: 100.adaptSize,
                         width: 100.adaptSize,
                         radius: BorderRadius.circular(4.h),
@@ -100,7 +109,7 @@ class ChallengelistItemWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Jakarta 200KM Rides",
+                  "Delhi 200KM Rides",
                   style: CustomTextStyles.labelLargeSpaceGroteskGray900,
                 ),
                 SizedBox(height: 3.v),
@@ -111,7 +120,7 @@ class ChallengelistItemWidget extends StatelessWidget {
                 SizedBox(height: 4.v),
                 RichText(
                   text: TextSpan(
-                    text: 'Credits Pts: ',
+                    text: 'Credit Pts: ',
                     style: TextStyle(
                       color: appTheme.black900,
                       fontSize: 15.fSize,
@@ -120,7 +129,7 @@ class ChallengelistItemWidget extends StatelessWidget {
                     ),
                     children: [
                       TextSpan(
-                        text: '$creditScore',
+                        text: '${widget.creditScore}',
                         style: TextStyle(
                           color: appTheme.gray800,
                           fontStyle: FontStyle.normal,
@@ -141,13 +150,19 @@ class ChallengelistItemWidget extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => DetailPageChallengeScreen(),
+                        builder: (context) => DetailPageChallengeScreen(
+                            creditScore: widget.creditScore,
+                            challengeIndex: widget.challengeIndex),
                       ),
                     );
                   },
                   height: 38.v,
                   width: 140.h,
-                  text: "Join challenge",
+                  buttonStyle: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(
+                        widget.isActive ? Colors.green : Colors.redAccent),
+                  ),
+                  text: widget.isActive ? "Active" : "Join Challenge",
                   buttonTextStyle: CustomTextStyles.titleSmallSpaceGrotesk,
                 ),
               ],

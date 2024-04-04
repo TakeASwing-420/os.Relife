@@ -13,12 +13,14 @@ class ChallengePage extends StatefulWidget {
 
 class _ChallengePageState extends State<ChallengePage> {
   late String userBalance;
+  List<bool> challengeList = [false, false, false, false, false, false];
 
   @override
   void initState() {
     super.initState();
     userBalance = '0';
     fetchUserBalance();
+    fetchUserTasks();
   }
 
   Future<void> fetchUserBalance() async {
@@ -31,27 +33,68 @@ class _ChallengePageState extends State<ChallengePage> {
       setState(() {
         userBalance = "Error";
       });
-      final errorMessage = error.toString().substring(11);
+      final errorMessage = error;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           elevation: 20.v,
-          content: Row(
-            children: [
-              SizedBox(width: 5.h),
-              Icon(
-                Icons.error_outline,
-                size: 35.adaptSize,
-                color: Colors.white,
-              ),
-              SizedBox(width: 5.h),
-              Text(
-                '$errorMessage',
-                style: TextStyle(
+          content: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                SizedBox(width: 5.h),
+                Icon(
+                  Icons.error_outline,
+                  size: 35.adaptSize,
                   color: Colors.white,
-                  fontWeight: FontWeight.w700,
                 ),
-              ),
-            ],
+                SizedBox(width: 5.h),
+                Text(
+                  '$errorMessage',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          backgroundColor: Colors.deepOrange,
+        ),
+      );
+    }
+  }
+
+  Future<void> fetchUserTasks() async {
+    try {
+      final List<bool> challenge_List = await DBMSHelper.get_challenges();
+      setState(() {
+        challengeList = challenge_List;
+      });
+    } catch (error) {
+      final errorMessage = error;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          elevation: 20.v,
+          content: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                SizedBox(width: 5.h),
+                Icon(
+                  Icons.error_outline,
+                  size: 35.adaptSize,
+                  color: Colors.white,
+                ),
+                SizedBox(width: 5.h),
+                Text(
+                  '$errorMessage',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ],
+            ),
           ),
           backgroundColor: Colors.deepOrange,
         ),
@@ -88,38 +131,45 @@ class _ChallengePageState extends State<ChallengePage> {
                   coinDisplay(),
                   SizedBox(height: 20.v),
                   ChallengelistItemWidget(
+                    challengeIndex: 0,
+                    isActive: challengeList[0],
                     creditScore: 2000,
                     imagePath: ImageConstant.img1669Logo385x375,
                   ),
                   SizedBox(height: 8.v),
                   ChallengelistItemWidget(
+                    challengeIndex: 1,
+                    isActive: challengeList[1],
                     creditScore: 500,
                     imagePath: ImageConstant.img1669Logo,
                   ),
                   SizedBox(height: 8.v),
                   ChallengelistItemWidget(
+                    challengeIndex: 2,
+                    isActive: challengeList[2],
                     creditScore: 500,
                     imagePath: ImageConstant.img1616Logo,
                   ),
                   SizedBox(height: 8.v),
                   ChallengelistItemWidget(
+                    challengeIndex: 3,
+                    isActive: challengeList[3],
                     creditScore: 1000,
                     imagePath: ImageConstant.img1669Logo385x375,
                   ),
                   SizedBox(height: 8.v),
                   ChallengelistItemWidget(
+                    challengeIndex: 4,
+                    isActive: challengeList[4],
                     creditScore: 500,
                     imagePath: ImageConstant.img1759Logo,
                   ),
                   SizedBox(height: 8.v),
                   ChallengelistItemWidget(
+                    challengeIndex: 5,
+                    isActive: challengeList[5],
                     creditScore: 100,
                     imagePath: ImageConstant.img1669Logo385x375,
-                  ),
-                  SizedBox(height: 8.v),
-                  ChallengelistItemWidget(
-                    creditScore: 200,
-                    imagePath: ImageConstant.img1759Logo,
                   ),
                   SizedBox(height: 16.v),
                 ],

@@ -18,6 +18,7 @@ class UserprofilesectionItemWidget extends StatelessWidget {
         );
 
   VoidCallback? onTapUserProfile;
+  late SnackBar snackBar;
 
   @override
   Widget build(BuildContext context) {
@@ -44,8 +45,8 @@ class UserprofilesectionItemWidget extends StatelessWidget {
                   children: [
                     CustomImageView(
                       imagePath: imagePath,
-                      height: 40.adaptSize,
-                      width: 40.adaptSize,
+                      height: 55.adaptSize,
+                      width: 55.adaptSize,
                       radius: BorderRadius.circular(
                         12.h,
                       ),
@@ -73,7 +74,7 @@ class UserprofilesectionItemWidget extends StatelessWidget {
                           SizedBox(height: 4.v),
                           RichText(
                             text: TextSpan(
-                              text: 'Credits Pts: ',
+                              text: 'Credit Pts: ',
                               style: TextStyle(
                                   color: appTheme.black900,
                                   fontSize: 15.fSize,

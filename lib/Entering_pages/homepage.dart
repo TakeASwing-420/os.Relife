@@ -69,24 +69,27 @@ class _HomePageState extends State<HomePage> {
       _showPrivateKeySnackbar();
       return true;
     } catch (error) {
-      final errorMessage = error.toString().substring(11);
+      final errorMessage = error;
       snackBar = SnackBar(
         elevation: 20.v,
-        content: Row(
-          children: [
-            SizedBox(width: 5.h),
-            Icon(
-              Icons.error_outline,
-              size: 35.adaptSize,
-              color: Colors.white,
-            ),
-            SizedBox(width: 5.h),
-            Text(
-              '$errorMessage',
-              style:
-                  TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
-            ),
-          ],
+        content: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: [
+              SizedBox(width: 5.h),
+              Icon(
+                Icons.error_outline,
+                size: 35.adaptSize,
+                color: Colors.white,
+              ),
+              SizedBox(width: 5.h),
+              Text(
+                '$errorMessage',
+                style:
+                    TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
+              ),
+            ],
+          ),
         ),
         backgroundColor: Colors.deepOrange,
       );

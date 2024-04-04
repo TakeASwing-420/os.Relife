@@ -47,7 +47,7 @@ class _Iphone13MiniTwentyScreenState extends State<Iphone13MiniTwentyScreen> {
       setState(() {
         userBalance = "Error";
       });
-      final errorMessage = error.toString().substring(11);
+      final errorMessage = error;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           elevation: 20.v,
@@ -79,7 +79,6 @@ class _Iphone13MiniTwentyScreenState extends State<Iphone13MiniTwentyScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-            appBar: AppBar(),
             resizeToAvoidBottomInset: false,
             body: SingleChildScrollView(
               child: SizedBox(
@@ -87,7 +86,7 @@ class _Iphone13MiniTwentyScreenState extends State<Iphone13MiniTwentyScreen> {
                   child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SizedBox(height: 1.v),
+                        SizedBox(height: 4.v),
                         SizedBox(
                             height: 811.v,
                             width: double.maxFinite,
@@ -107,6 +106,9 @@ class _Iphone13MiniTwentyScreenState extends State<Iphone13MiniTwentyScreen> {
                                           _buildLetsFindServiceSection(context),
                                           SizedBox(height: 13.v),
                                           CustomSearchView(
+                                              textStyle: CustomTextStyles
+                                                  .titleSmallBlack900,
+                                              autofocus: false,
                                               controller: searchController,
                                               hintText: "Search"),
                                           SizedBox(height: 72.v),
@@ -129,11 +131,11 @@ class _Iphone13MiniTwentyScreenState extends State<Iphone13MiniTwentyScreen> {
           Align(
               alignment: Alignment.bottomLeft,
               child: SizedBox(
-                  width: 205.h,
+                  width: 320.h,
                   child: Text("Lets find a \nservice provider",
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: theme.textTheme.headlineSmall))),
+                      style: theme.textTheme.headlineMedium))),
           CustomImageView(
               imagePath: ImageConstant.imgImage6,
               height: 40.adaptSize,
@@ -182,7 +184,7 @@ class _Iphone13MiniTwentyScreenState extends State<Iphone13MiniTwentyScreen> {
           name: data.name,
           creditScore: data.creditScore,
           onTapUserProfile: () {
-            onTapUserProfile(context);
+            onTapUserProfile(context, data.creditScore);
           },
         );
       },
@@ -287,14 +289,14 @@ class _Iphone13MiniTwentyScreenState extends State<Iphone13MiniTwentyScreen> {
   /// widget content.
   /// The sheet is displayed on top of the current view with scrolling enabled if
   /// content exceeds viewport height.
-  void onTapUserProfile(BuildContext context) {
+  void onTapUserProfile(BuildContext context, int amount) {
     // Close the virtual keyboard if it's open
     FocusManager.instance.primaryFocus?.unfocus();
 
     // Show the user profile bottom sheet
     showModalBottomSheet(
       context: context,
-      builder: (_) => Iphone13MiniTwentythreeScreen(),
+      builder: (_) => Iphone13MiniTwentythreeScreen(creditScore: amount),
       isScrollControlled: true,
     );
   }

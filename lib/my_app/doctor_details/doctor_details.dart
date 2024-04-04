@@ -3,14 +3,42 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart' as fs;
 import 'package:outline_gradient_button/outline_gradient_button.dart';
 import 'package:Relife/widgets/custom_elevated_button.dart';
+import 'package:confetti/confetti.dart';
 
-class Iphone13MiniTwentythreeScreen extends StatelessWidget {
-  Iphone13MiniTwentythreeScreen({Key? key}) : super(key: key);
+class Iphone13MiniTwentythreeScreen extends StatefulWidget {
+  final int creditScore;
+
+  Iphone13MiniTwentythreeScreen({Key? key, required this.creditScore})
+      : super(key: key);
+
+  @override
+  State<Iphone13MiniTwentythreeScreen> createState() =>
+      _Iphone13MiniTwentythreeScreenState();
+}
+
+class _Iphone13MiniTwentythreeScreenState
+    extends State<Iphone13MiniTwentythreeScreen> {
+  late SnackBar snackBar;
+  late ConfettiController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = ConfettiController(duration: const Duration(seconds: 3));
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: Scaffold(
+        child: Stack(
+      children: [
+        Scaffold(
             body: SizedBox(
                 width: double.maxFinite,
                 child: SizedBox(
@@ -121,10 +149,96 @@ class Iphone13MiniTwentythreeScreen extends StatelessWidget {
                                                               Colors.black)))),
                                       SizedBox(height: 14.v),
                                       _buildAvailableServicesStack(context),
-                                      SizedBox(height: 24.v)
+                                      SizedBox(height: 26.h),
+                                      CustomElevatedButton(
+                                        height: 36.v,
+                                        buttonStyle: ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStateColor.resolveWith(
+                                                  (states) {
+                                            return Colors.deepOrange;
+                                          }),
+                                        ),
+                                        onPressed: () async {
+                                          try {
+                                            final String response =
+                                                await DBMSHelper.redeemTokens(
+                                                    widget.creditScore);
+                                            snackBar = SnackBar(
+                                              elevation: 20.v,
+                                              content: Text(
+                                                '$response',
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight: FontWeight.w700,
+                                                    fontFamily: "new",
+                                                    fontSize: 16.fSize),
+                                              ),
+                                              backgroundColor:
+                                                  Colors.deepOrange,
+                                            );
+                                            _controller.play();
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(snackBar);
+                                            await Future.delayed(
+                                                Duration(seconds: 3));
+                                            Navigator.pushNamed(
+                                                context,
+                                                AppRoutes
+                                                    .iphone13MiniTwentyScreen);
+                                          } catch (error) {
+                                            final errorMessage = error;
+                                            snackBar = SnackBar(
+                                              elevation: 20.v,
+                                              content: Row(
+                                                children: [
+                                                  SizedBox(width: 5.h),
+                                                  Icon(
+                                                    Icons.error_outline,
+                                                    size: 35.adaptSize,
+                                                    color: Colors.white,
+                                                  ),
+                                                  SizedBox(width: 5.h),
+                                                  Text(
+                                                    '$errorMessage',
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.w700),
+                                                  ),
+                                                ],
+                                              ),
+                                              backgroundColor:
+                                                  Colors.deepOrange,
+                                            );
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(snackBar);
+                                          }
+                                        },
+                                        text: "Buy",
+                                        margin: EdgeInsets.symmetric(
+                                            horizontal: 22.h),
+                                      ),
+                                      SizedBox(height: 70.v),
                                     ]),
                               )))
-                    ])))));
+                    ])))),
+        Align(
+          alignment: Alignment.center,
+          child: ConfettiWidget(
+            confettiController: _controller,
+            blastDirectionality: BlastDirectionality.explosive,
+            colors: const [
+              Colors.green,
+              Colors.blue,
+              Colors.pink,
+              Colors.orange,
+              Colors.purple
+            ],
+          ),
+        ),
+      ],
+    ));
   }
 
   ///Section Widget
@@ -554,6 +668,4 @@ class Iphone13MiniTwentythreeScreen extends StatelessWidget {
                           ])))
             ])));
   }
-
-  /// Navigates back to the previous screen.
 }

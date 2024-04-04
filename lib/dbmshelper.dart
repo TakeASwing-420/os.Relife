@@ -115,4 +115,91 @@ class DBMSHelper {
       throw Exception(data['error']);
     }
   }
+
+  static Future<List<bool>> get_challenges() async {
+    final String? username = await getUserName();
+    final url = Uri.parse('$baseUrl/get-challenges');
+
+    final response = await http.post(
+      url,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: jsonEncode({'username': username}),
+    );
+
+    final data = jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+      final List<dynamic> challengeList = data['challenges'];
+      List<bool> boolList = challengeList.map((e) => e as bool).toList();
+      return boolList;
+    } else {
+      throw Exception(data['error']);
+    }
+  }
+
+  static Future<void> setChallenges(int challengeIndex, bool isActive) async {
+    final String? username = await getUserName();
+    final url = Uri.parse('$baseUrl/set-challenges');
+
+    final response = await http.post(
+      url,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: jsonEncode({
+        'username': username,
+        'challengeIndex': challengeIndex,
+        'isActive': isActive,
+      }),
+    );
+
+    if (response.statusCode != 200)
+      throw Exception("Challenges could not be set");
+  }
+
+  static Future<String> redeemTokens(int amount) async {
+    final url = Uri.parse('$baseUrl/redeem-tokens');
+    final String? username = await getUserName();
+    final response = await http.post(
+      url,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: jsonEncode({
+        'amount': amount,
+        'name': username,
+      }),
+    );
+
+    final data = jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+      return (data['message']);
+    } else {
+      throw Exception(data['error']);
+    }
+  }
+
+  static Future<void> fetchTokens(int amount) async {
+    final url = Uri.parse('$baseUrl/fetch-tokens');
+    final String? username = await getUserName();
+    final response = await http.post(
+      url,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: jsonEncode({
+        'amount': amount,
+        'name': username,
+      }),
+    );
+
+    final data = jsonDecode(response.body);
+
+    if (response.statusCode != 200) {
+      throw Exception(data['error']);
+    }
+  }
 }
