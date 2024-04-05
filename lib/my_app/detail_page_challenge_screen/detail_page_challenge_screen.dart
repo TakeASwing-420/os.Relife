@@ -28,19 +28,17 @@ class DetailPageChallengeScreen extends StatefulWidget {
 class _DetailPageChallengeScreenState extends State<DetailPageChallengeScreen> {
   Color mycolor = Colors.redAccent;
   String mytext = "Join Challenge";
-  bool _working = true;
-  void initState() {
-    _working = false;
-    super.initState();
-  }
+  bool _working = false;
 
   Future<void> begar_khata1() async {
     await DBMSHelper.fetchTokens(widget.creditScore);
     await DBMSHelper.setChallenges(widget.challengeIndex, false);
+    await Future.delayed(Duration(seconds: 5));
   }
 
   Future<void> begar_khata2() async {
     await DBMSHelper.setChallenges(widget.challengeIndex, true);
+    await Future.delayed(Duration(seconds: 5));
   }
 
   @override

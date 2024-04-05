@@ -41,7 +41,6 @@ class _Iphone13MiniTwentyScreenState extends State<Iphone13MiniTwentyScreen> {
 
   Future<void> fetchUserBalance() async {
     try {
-      await Future.delayed(Duration(seconds: 5));
       final String balance = await DBMSHelper.getCoins();
       setState(() {
         userBalance = balance;
