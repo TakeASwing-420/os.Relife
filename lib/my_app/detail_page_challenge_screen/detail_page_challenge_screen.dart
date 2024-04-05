@@ -32,11 +32,13 @@ class _DetailPageChallengeScreenState extends State<DetailPageChallengeScreen> {
     await DBMSHelper.fetchTokens(widget.creditScore);
     await DBMSHelper.setChallenges(widget.challengeIndex, false);
     await Future.delayed(Duration(seconds: 5));
+    Navigator.pushNamed(context, AppRoutes.challengePage);
   }
 
   Future<void> begar_khata2() async {
     await DBMSHelper.setChallenges(widget.challengeIndex, true);
     await Future.delayed(Duration(seconds: 5));
+    Navigator.pushNamed(context, AppRoutes.challengePage);
   }
 
   @override
@@ -193,8 +195,6 @@ class _DetailPageChallengeScreenState extends State<DetailPageChallengeScreen> {
                                   } else {
                                     begar_khata2();
                                   }
-                                  Navigator.pushNamed(
-                                      context, AppRoutes.challengePage);
                                 });
                               },
                               child: _working
