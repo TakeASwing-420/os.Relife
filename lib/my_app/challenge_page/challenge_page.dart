@@ -27,6 +27,7 @@ class _ChallengePageState extends State<ChallengePage> {
 
   Future<void> fetchUserBalance() async {
     try {
+      await Future.delayed(Duration(seconds: 5));
       final String balance = await DBMSHelper.getCoins();
       setState(() {
         userBalance = balance;
@@ -68,6 +69,7 @@ class _ChallengePageState extends State<ChallengePage> {
 
   Future<void> fetchUserTasks() async {
     try {
+      await Future.delayed(Duration(seconds: 5));
       final List<bool> challenge_List = await DBMSHelper.get_challenges();
       setState(() {
         challengeList = challenge_List;

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'widgets/profilesection_item_widget.dart';
 import 'package:Relife/core/app_export.dart';
 import 'package:Relife/widgets/custom_search_view.dart';
@@ -39,15 +41,16 @@ class _Iphone13MiniTwentyScreenState extends State<Iphone13MiniTwentyScreen> {
 
   Future<void> fetchUserBalance() async {
     try {
+      await Future.delayed(Duration(seconds: 5));
       final String balance = await DBMSHelper.getCoins();
       setState(() {
         userBalance = balance;
       });
-    } catch (error) {
+    } on SocketException {
       setState(() {
         userBalance = "Error";
       });
-      final errorMessage = error;
+      final errorMessage = "Network Error";
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           elevation: 20.v,

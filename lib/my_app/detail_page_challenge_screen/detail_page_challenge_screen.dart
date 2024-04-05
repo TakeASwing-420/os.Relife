@@ -32,7 +32,7 @@ class _DetailPageChallengeScreenState extends State<DetailPageChallengeScreen> {
 
   Future<void> fetchUserTasks() async {
     try {
-      await Future.delayed(Duration(seconds: 6));
+      await Future.delayed(Duration(seconds: 5));
       final List<bool> challenge_List = await DBMSHelper.get_challenges();
       setState(() {
         challengeList = challenge_List;
@@ -50,7 +50,7 @@ class _DetailPageChallengeScreenState extends State<DetailPageChallengeScreen> {
 
   Future<void> begar_khata1() async {
     await DBMSHelper.fetchTokens(widget.creditScore);
-    DBMSHelper.setChallenges(widget.challengeIndex, false);
+    await DBMSHelper.setChallenges(widget.challengeIndex, false);
   }
 
   Future<void> begar_khata2() async {
