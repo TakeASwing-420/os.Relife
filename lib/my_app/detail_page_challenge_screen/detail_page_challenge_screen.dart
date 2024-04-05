@@ -26,8 +26,6 @@ class DetailPageChallengeScreen extends StatefulWidget {
 }
 
 class _DetailPageChallengeScreenState extends State<DetailPageChallengeScreen> {
-  Color mycolor = Colors.redAccent;
-  String mytext = "Join Challenge";
   bool _working = false;
 
   Future<void> begar_khata1() async {
@@ -190,7 +188,7 @@ class _DetailPageChallengeScreenState extends State<DetailPageChallengeScreen> {
                               onTap: () {
                                 setState(() {
                                   _working = true;
-                                  if (mycolor == Colors.green) {
+                                  if (widget.mycolor == Colors.green) {
                                     begar_khata1();
                                   } else {
                                     begar_khata2();
@@ -229,12 +227,12 @@ class _DetailPageChallengeScreenState extends State<DetailPageChallengeScreen> {
       height: 42.v,
       width: 140.h,
       decoration: BoxDecoration(
-        color: mycolor,
+        color: widget.mycolor,
         borderRadius: BorderRadius.circular(8.v),
       ),
       alignment: Alignment.center,
       child: Text(
-        mytext,
+        widget.mytext,
         style: CustomTextStyles.titleSmallSpaceGrotesk.copyWith(
           color: Colors.white,
         ),
