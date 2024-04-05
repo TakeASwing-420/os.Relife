@@ -7,10 +7,15 @@ import 'package:readmore/readmore.dart';
 
 class DetailPageChallengeScreen extends StatefulWidget {
   final int creditScore;
-
+  final Color mycolor;
+  final String mytext;
   final int challengeIndex;
   DetailPageChallengeScreen(
-      {Key? key, required this.creditScore, required this.challengeIndex})
+      {Key? key,
+      required this.creditScore,
+      required this.challengeIndex,
+      required this.mycolor,
+      required this.mytext})
       : super(
           key: key,
         );
@@ -21,31 +26,12 @@ class DetailPageChallengeScreen extends StatefulWidget {
 }
 
 class _DetailPageChallengeScreenState extends State<DetailPageChallengeScreen> {
-  List<bool> challengeList = [false, false, false, false, false, false];
   Color mycolor = Colors.redAccent;
   String mytext = "Join Challenge";
   bool _working = true;
   void initState() {
-    fetchUserTasks();
+    _working = false;
     super.initState();
-  }
-
-  Future<void> fetchUserTasks() async {
-    try {
-      await Future.delayed(Duration(seconds: 5));
-      final List<bool> challenge_List = await DBMSHelper.get_challenges();
-      setState(() {
-        challengeList = challenge_List;
-        mycolor = challengeList[widget.challengeIndex]
-            ? Colors.green
-            : Colors.redAccent;
-        mytext =
-            challengeList[widget.challengeIndex] ? "Start" : "Join Challenge";
-        _working = false;
-      });
-    } catch (error) {
-      print(error);
-    }
   }
 
   Future<void> begar_khata1() async {
@@ -206,15 +192,13 @@ class _DetailPageChallengeScreenState extends State<DetailPageChallengeScreen> {
                               onTap: () {
                                 setState(() {
                                   _working = true;
-
-                                  if (challengeList[widget.challengeIndex] ==
-                                      true) {
+                                  if (mycolor == Colors.green) {
                                     begar_khata1();
-                                    fetchUserTasks();
                                   } else {
                                     begar_khata2();
-                                    fetchUserTasks();
                                   }
+                                  Navigator.pushNamed(
+                                      context, AppRoutes.challengePage);
                                 });
                               },
                               child: _working

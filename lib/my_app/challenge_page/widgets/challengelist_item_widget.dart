@@ -151,6 +151,11 @@ class _ChallengelistItemWidgetState extends State<ChallengelistItemWidget> {
                       context,
                       MaterialPageRoute(
                         builder: (context) => DetailPageChallengeScreen(
+                            mycolor: widget.isActive
+                                ? Colors.green
+                                : Colors.redAccent,
+                            mytext:
+                                widget.isActive ? "Active" : "Join Challenge",
                             creditScore: widget.creditScore,
                             challengeIndex: widget.challengeIndex),
                       ),
