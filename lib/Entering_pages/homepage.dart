@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:web3modal_flutter/web3modal_flutter.dart';
 import 'package:Relife/core/app_export.dart';
@@ -68,8 +70,8 @@ class _HomePageState extends State<HomePage> {
       await DBMSHelper.storeUserName(_username!);
       _showPrivateKeySnackbar();
       return true;
-    } catch (error) {
-      final errorMessage = error;
+    } on SocketException {
+      final errorMessage = "Network problem";
       snackBar = SnackBar(
         elevation: 20.v,
         content: SingleChildScrollView(

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:Relife/widgets/custom_text_form_field.dart';
 import 'package:Relife/widgets/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
@@ -163,8 +165,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                 .showSnackBar(snackBar);
                             Navigator.pushNamed(
                                 context, AppRoutes.challengeContainerScreen);
-                          } catch (error) {
-                            final errorMessage = error;
+                          } on SocketException {
+                            final errorMessage = "Network Error";
                             snackBar = SnackBar(
                               elevation: 20.v,
                               content: SingleChildScrollView(

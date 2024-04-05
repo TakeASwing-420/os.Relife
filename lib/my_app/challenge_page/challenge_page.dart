@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import '../challenge_page/widgets/challengelist_item_widget.dart';
 import 'package:Relife/core/app_export.dart';
 import 'package:Relife/widgets/app_bar/appbar_title.dart';
@@ -29,11 +31,11 @@ class _ChallengePageState extends State<ChallengePage> {
       setState(() {
         userBalance = balance;
       });
-    } catch (error) {
+    } on SocketException {
       setState(() {
         userBalance = "Error";
       });
-      final errorMessage = error;
+      final errorMessage = "Network Error";
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           elevation: 20.v,
@@ -70,8 +72,8 @@ class _ChallengePageState extends State<ChallengePage> {
       setState(() {
         challengeList = challenge_List;
       });
-    } catch (error) {
-      final errorMessage = error;
+    } on SocketException {
+      final errorMessage = "Network Error";
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           elevation: 20.v,
