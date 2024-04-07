@@ -145,10 +145,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         onPressed: () async {
                           try {
                             final hi = userNameController.text;
-                            final token = await DBMSHelper.loginUser(hi,
+                            final data = await DBMSHelper.loginUser(hi,
                                 passwordController.text, pkeyController.text);
-                            await DBMSHelper.storeAccessToken(token);
+                            await DBMSHelper.storeAccessToken(data["token"]!);
                             await DBMSHelper.storeUserName(hi);
+                            await DBMSHelper.storeCID(data["cid"]!);
                             snackBar = SnackBar(
                               elevation: 20.v,
                               content: Text(

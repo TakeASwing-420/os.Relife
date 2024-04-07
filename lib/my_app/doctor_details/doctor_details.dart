@@ -20,6 +20,7 @@ class _Iphone13MiniTwentythreeScreenState
     extends State<Iphone13MiniTwentythreeScreen> {
   late SnackBar snackBar;
   late ConfettiController _controller;
+  bool _registering = false;
 
   @override
   void initState() {
@@ -170,8 +171,7 @@ class _Iphone13MiniTwentythreeScreenState
                                                 '$response',
                                                 style: TextStyle(
                                                     color: Colors.white,
-                                                    fontWeight: FontWeight.w700,
-                                                    fontFamily: "new",
+                                                    fontFamily: "Poppins",
                                                     fontSize: 16.fSize),
                                               ),
                                               backgroundColor:
@@ -181,12 +181,11 @@ class _Iphone13MiniTwentythreeScreenState
                                             ScaffoldMessenger.of(context)
                                                 .showSnackBar(snackBar);
                                             await Future.delayed(
-                                                Duration(seconds: 3));
-                                            Navigator.pushNamed(
-                                                context,
-                                                AppRoutes
-                                                    .iphone13MiniTwentyScreen);
+                                                Duration(seconds: 2));
                                           } catch (error) {
+                                            setState(() {
+                                              _registering = false;
+                                            });
                                             final errorMessage = error;
                                             snackBar = SnackBar(
                                               elevation: 20.v,
@@ -203,8 +202,8 @@ class _Iphone13MiniTwentythreeScreenState
                                                     '$errorMessage',
                                                     style: TextStyle(
                                                         color: Colors.white,
-                                                        fontWeight:
-                                                            FontWeight.w700),
+                                                        fontSize: 16.fSize,
+                                                        fontFamily: "Poppins"),
                                                   ),
                                                 ],
                                               ),

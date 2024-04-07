@@ -187,7 +187,7 @@ class _HomePageState extends State<HomePage> {
             SizedBox(height: 40.v),
             Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(62.v)),
+                borderRadius: BorderRadius.all(Radius.circular(84.v)),
               ),
               height: 32.v,
               width: 180.h,

@@ -19,7 +19,8 @@ class ImageBuilderAnimation extends StatelessWidget {
         return Transform.scale(
             scale: _scale,
             child: CircleAvatar(
-                backgroundImage: AssetImage(imageAssetPath),
+                backgroundColor: Colors.transparent,
+                backgroundImage: NetworkImage(imageAssetPath),
                 radius: _scale * RADIUS));
       },
     );

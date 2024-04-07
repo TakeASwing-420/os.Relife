@@ -35,6 +35,37 @@ class DBMSHelper {
     return prefs.getString('username');
   }
 
+  static Future<void> storeCID(String N) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('cid', N);
+  }
+
+  static Future<String?> getCID() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('cid');
+  }
+
+  static Future<void> updateCID(String username, String? cid) async {
+    await storeCID(cid ?? "");
+    final url = Uri.parse('$baseUrl/update-cid');
+    final response = await http.post(
+      url,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: jsonEncode({
+        'username': username,
+        'cid': cid,
+      }),
+    );
+
+    final data = jsonDecode(response.body);
+
+    if (response.statusCode != 200) {
+      throw Exception(data['error']);
+    }
+  }
+
   static Future<Map<String, dynamic>> registerUser(String username,
       String password, String confirmPassword, String walletAddress) async {
     final url = Uri.parse('$baseUrl/register');
@@ -56,7 +87,7 @@ class DBMSHelper {
     }
   }
 
-  static Future<dynamic> loginUser(
+  static Future<Map<dynamic, String>> loginUser(
       String username, String password, String pKey) async {
     final url = Uri.parse('$baseUrl/login');
     final response = await http.post(
@@ -69,7 +100,7 @@ class DBMSHelper {
     if (response.statusCode != 200) {
       throw Exception(data['error']);
     } else
-      return data['token'];
+      return {'token': data['token'], 'cid': data['cid']};
   }
 
   static Future<Map<String, dynamic>> getProtectedData() async {

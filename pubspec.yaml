@@ -6,9 +6,12 @@ environment:
 dependencies: 
   flutter: 
     sdk: flutter
+
+  image_picker: ^1.0.2
   confetti: any
   cached_network_image: ^3.3.0
   flutter_svg: ^2.0.9
+  flutter_dotenv: ^5.0.2 
   outline_gradient_button: ^2.0.1+1
   gradient_borders: ^1.0.0
   flutter_svg_provider: ^1.0.7
@@ -27,6 +30,7 @@ flutter:
   assets: 
     - assets/
     - assets/images/
+    - .env
   fonts: 
     - family: Space Grotesk
       fonts: 

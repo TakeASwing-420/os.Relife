@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:Relife/core/app_export.dart';
+import 'package:image_picker/image_picker.dart';
 import "animation.dart";
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class MySettingsScreen extends StatefulWidget {
   @override
@@ -8,9 +12,66 @@ class MySettingsScreen extends StatefulWidget {
 }
 
 class _MySettingsScreenState extends State<MySettingsScreen> {
+  String urlpath =
+      "https://aquamarine-lazy-marmot-526.mypinata.cloud/ipfs/QmPgxBMhTg6FTETanmWA5hCBpGvCZXEkZm2MkyH1s4MjvX/?pinataGatewayToken=vSRxG5-Kq7UT0zr-khIm4yJqVmooF33MszFW5vIB-BqdCcu_sxASkUW9bkVHevhq";
+  String jwtToken = dotenv.env['JWT'] ?? ""; //!Use your own pinata api token
+  @override
+  void initState() {
+    super.initState();
+    fetchImage();
+  }
+
+  Future<void> fetchImage() async {
+    try {
+      final String? _cid = await DBMSHelper.getCID();
+      setState(() {
+        if (_cid == "" || _cid == null) {
+          urlpath =
+              "https://aquamarine-lazy-marmot-526.mypinata.cloud/ipfs/QmPgxBMhTg6FTETanmWA5hCBpGvCZXEkZm2MkyH1s4MjvX/?pinataGatewayToken=vSRxG5-Kq7UT0zr-khIm4yJqVmooF33MszFW5vIB-BqdCcu_sxASkUW9bkVHevhq";
+        } else
+          urlpath =
+              "https://aquamarine-lazy-marmot-526.mypinata.cloud/ipfs/$_cid/?pinataGatewayToken=vSRxG5-Kq7UT0zr-khIm4yJqVmooF33MszFW5vIB-BqdCcu_sxASkUW9bkVHevhq";
+      });
+    } catch (e) {
+      setState(() {
+        urlpath =
+            "https://aquamarine-lazy-marmot-526.mypinata.cloud/ipfs/QmPgxBMhTg6FTETanmWA5hCBpGvCZXEkZm2MkyH1s4MjvX/?pinataGatewayToken=vSRxG5-Kq7UT0zr-khIm4yJqVmooF33MszFW5vIB-BqdCcu_sxASkUW9bkVHevhq";
+      });
+      final errorMessage = "Error Retrieving Image";
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          elevation: 20.v,
+          content: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                SizedBox(width: 5.h),
+                Icon(
+                  Icons.error_outline,
+                  size: 35.adaptSize,
+                  color: Colors.white,
+                ),
+                SizedBox(width: 5.h),
+                Text(
+                  '$errorMessage',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          backgroundColor: Colors.deepOrange,
+        ),
+      );
+    }
+  }
+
   String user_wallet = "";
   String password = "";
   String confirm_password = "";
+  final ImagePicker _picker = ImagePicker();
 
   Future<dynamic> showUpdatePasswordDialog(BuildContext context, String Title) {
     return showDialog(
@@ -281,12 +342,91 @@ class _MySettingsScreenState extends State<MySettingsScreen> {
             Spacer(),
             TextButton(
               child: Text("Pick"),
-              onPressed: () {},
+              onPressed: () async {
+                final _image =
+                    await _picker.pickImage(source: ImageSource.gallery);
+                if (_image != null) {
+                  try {
+                    final String? username = await DBMSHelper.getUserName();
+                    final String? pinatahash = await _pinFileToIPFS(_image);
+                    await DBMSHelper.updateCID(username!, pinatahash);
+                    print("-----------------------------------------------");
+                    print(pinatahash);
+                    print("------------------------------------------------");
+                    setState(() {
+                      urlpath =
+                          "https://aquamarine-lazy-marmot-526.mypinata.cloud/ipfs/$pinatahash/?pinataGatewayToken=vSRxG5-Kq7UT0zr-khIm4yJqVmooF33MszFW5vIB-BqdCcu_sxASkUW9bkVHevhq";
+                    });
+                  } catch (e) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        elevation: 20.v,
+                        content: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: [
+                              SizedBox(width: 5.h),
+                              Icon(
+                                Icons.error_outline,
+                                size: 35.adaptSize,
+                                color: Colors.white,
+                              ),
+                              SizedBox(width: 5.h),
+                              Text(
+                                'Failed to pin image',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        backgroundColor: Colors.deepOrange,
+                      ),
+                    );
+                  }
+                }
+                Navigator.of(context).pop();
+              },
             ),
           ],
         );
       },
     );
+  }
+
+  Future<String> _pinFileToIPFS(var _image) async {
+    var url = "https://api.pinata.cloud/pinning/pinFileToIPFS";
+    print(jwtToken);
+    var headers = {
+      "Authorization": "Bearer " + jwtToken,
+    };
+
+    var request = http.MultipartRequest('POST', Uri.parse(url));
+    request.headers.addAll(headers);
+    request.fields['pinataMetadata'] = '{ "name": "Pinnie.json" }';
+    request.fields['pinataOptions'] = '{ "cidVersion": 1 }';
+    if (_image != null) {
+      request.files.add(http.MultipartFile(
+        'file',
+        _image!.readAsBytes().asStream(),
+        await _image!.length(),
+        filename: _image!.path.split('/').last,
+      ));
+    } else {
+      throw Exception('No image selected');
+    }
+
+    var streamedResponse = await request.send();
+    var response = await http.Response.fromStream(streamedResponse);
+    final jsonResponse = json.decode(response.body);
+    if (response.statusCode == 200) {
+      return jsonResponse['IpfsHash'];
+    } else {
+      print(jsonResponse);
+      throw Exception('Failed to pin file to IPFS');
+    }
   }
 
   Future<dynamic> signOut(BuildContext context, String Title) {
@@ -432,7 +572,7 @@ class _MySettingsScreenState extends State<MySettingsScreen> {
               child: Padding(
                 padding: EdgeInsets.all(20),
                 child: ImageBuilderAnimation(
-                  imageAssetPath: ImageConstant.imgFrame622,
+                  imageAssetPath: urlpath,
                   RADIUS: 99,
                 ),
               ),
