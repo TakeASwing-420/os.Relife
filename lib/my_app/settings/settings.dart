@@ -4,7 +4,8 @@ import 'package:http/http.dart' as http;
 import 'package:Relife/core/app_export.dart';
 import 'package:image_picker/image_picker.dart';
 import "animation.dart";
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter/services.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MySettingsScreen extends StatefulWidget {
   @override
@@ -14,7 +15,7 @@ class MySettingsScreen extends StatefulWidget {
 class _MySettingsScreenState extends State<MySettingsScreen> {
   String urlpath =
       "https://aquamarine-lazy-marmot-526.mypinata.cloud/ipfs/QmPgxBMhTg6FTETanmWA5hCBpGvCZXEkZm2MkyH1s4MjvX/?pinataGatewayToken=vSRxG5-Kq7UT0zr-khIm4yJqVmooF33MszFW5vIB-BqdCcu_sxASkUW9bkVHevhq";
-  String jwtToken = dotenv.env['JWT'] ?? ""; //!Use your own pinata api token
+
   @override
   void initState() {
     super.initState();
@@ -24,7 +25,9 @@ class _MySettingsScreenState extends State<MySettingsScreen> {
   Future<void> fetchImage() async {
     try {
       final String? _cid = await DBMSHelper.getCID();
+      final String? name = await DBMSHelper.getUserName();
       setState(() {
+        _name = name;
         if (_cid == "" || _cid == null) {
           urlpath =
               "https://aquamarine-lazy-marmot-526.mypinata.cloud/ipfs/QmPgxBMhTg6FTETanmWA5hCBpGvCZXEkZm2MkyH1s4MjvX/?pinataGatewayToken=vSRxG5-Kq7UT0zr-khIm4yJqVmooF33MszFW5vIB-BqdCcu_sxASkUW9bkVHevhq";
@@ -68,158 +71,246 @@ class _MySettingsScreenState extends State<MySettingsScreen> {
     }
   }
 
-  String user_wallet = "";
+  String? _name = "";
   String password = "";
   String confirm_password = "";
+  String pkey = "";
+  String new_one = "";
   final ImagePicker _picker = ImagePicker();
 
   Future<dynamic> showUpdatePasswordDialog(BuildContext context, String Title) {
     return showDialog(
       context: context,
-      builder: (BuildContext context) {
+      builder: (BuildContext dialogContex) {
         return AlertDialog(
           title: Text(Title,
               style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
-          content: Column(
-            children: [
-              Text(
-                  "This is the update password dialog. Please Re-enter the app to apply Changes."),
-              SizedBox(height: 10),
-              TextField(
-                decoration: InputDecoration(
-                  labelText: 'Password',
-                  labelStyle: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.w500,
-                      fontFamily: "new",
-                      fontSize: 22),
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.red,
+          content: SingleChildScrollView(
+            child: Column(
+              children: [
+                Text(
+                    "This is the update password dialog. Please Re-enter the app to apply Changes."),
+                SizedBox(height: 10),
+                TextField(
+                  decoration: InputDecoration(
+                    labelText: 'Previous Password',
+                    labelStyle: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: "new",
+                        fontSize: 22),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.red,
+                      ),
                     ),
+                    contentPadding: EdgeInsets.fromLTRB(20, 8, 8, 8),
+                    filled: true,
+                    fillColor: Colors.white,
                   ),
-                  contentPadding: EdgeInsets.fromLTRB(20, 8, 8, 8),
-                  filled: true,
-                  fillColor: Colors.white,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  cursorColor: Colors.black,
+                  obscureText: true,
+                  onChanged: (value) {
+                    setState(() {
+                      password = value;
+                    });
+                  },
                 ),
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.w500,
-                ),
-                cursorColor: Colors.black,
-                obscureText: true,
-                onChanged: (value) {
-                  setState(() {
-                    password = value;
-                  });
-                },
-              ),
-              SizedBox(height: 10),
-              TextField(
-                decoration: InputDecoration(
-                  labelText: 'Confirm Password',
-                  labelStyle: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.w500,
-                      fontFamily: "new",
-                      fontSize: 22),
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.red,
+                SizedBox(height: 10),
+                TextField(
+                  decoration: InputDecoration(
+                    labelText: 'Private Key',
+                    labelStyle: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: "new",
+                        fontSize: 22),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.red,
+                      ),
                     ),
+                    contentPadding: EdgeInsets.fromLTRB(20, 8, 8, 8),
+                    filled: true,
+                    fillColor: Colors.white,
                   ),
-                  contentPadding: EdgeInsets.fromLTRB(20, 8, 8, 8),
-                  filled: true,
-                  fillColor: Colors.white,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  cursorColor: Colors.black,
+                  obscureText: true,
+                  onChanged: (value) {
+                    setState(() {
+                      pkey = value;
+                    });
+                  },
                 ),
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.w500,
+                SizedBox(height: 10),
+                TextField(
+                  decoration: InputDecoration(
+                    labelText: 'New Password',
+                    labelStyle: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: "new",
+                        fontSize: 22),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.red,
+                      ),
+                    ),
+                    contentPadding: EdgeInsets.fromLTRB(20, 8, 8, 8),
+                    filled: true,
+                    fillColor: Colors.white,
+                  ),
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  cursorColor: Colors.black,
+                  obscureText: true,
+                  onChanged: (value) {
+                    setState(() {
+                      new_one = value;
+                    });
+                  },
                 ),
-                cursorColor: Colors.black,
-                obscureText: true,
-                onChanged: (value) {
-                  setState(() {
-                    confirm_password = value;
-                  });
-                },
-              ),
-            ],
+                SizedBox(height: 10),
+                TextField(
+                  decoration: InputDecoration(
+                    labelText: 'Confirm Password',
+                    labelStyle: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: "new",
+                        fontSize: 22),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.red,
+                      ),
+                    ),
+                    contentPadding: EdgeInsets.fromLTRB(20, 8, 8, 8),
+                    filled: true,
+                    fillColor: Colors.white,
+                  ),
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  cursorColor: Colors.black,
+                  obscureText: true,
+                  onChanged: (value) {
+                    setState(() {
+                      confirm_password = value;
+                    });
+                  },
+                ),
+              ],
+            ),
           ),
           actions: [
             TextButton(
               child: Text("Close"),
               onPressed: () {
-                Navigator.of(context).pop();
+                Navigator.of(dialogContex).pop();
               },
             ),
             Spacer(),
             TextButton(
               child: Text("OK"),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
+              onPressed: () async {
+                Navigator.of(dialogContex).pop();
+                try {
+                  final username = await DBMSHelper.getUserName();
+                  final new_key = await DBMSHelper.updatePassword(
+                      username!, pkey, password, new_one, confirm_password);
 
-  Future<dynamic> showUpdateWalletDialog(BuildContext context, String Title) {
-    return showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(Title,
-              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
-          content: Column(
-            children: [
-              Text(
-                  "This is the update Wallet dialog. After doing so re-enter into the app to apply changes"),
-              SizedBox(height: 10),
-              TextField(
-                decoration: InputDecoration(
-                  labelText: 'New Wallet Address',
-                  labelStyle: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.w500,
-                      fontFamily: "new",
-                      fontSize: 22),
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.red,
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      elevation: 20.v,
+                      content: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: [
+                            SizedBox(width: 5.h),
+                            Icon(
+                              Icons.error_outline,
+                              size: 35.adaptSize,
+                              color: Colors.white,
+                            ),
+                            SizedBox(width: 5.h),
+                            Text(
+                              'New Key: $new_key',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                            SizedBox(width: 8.h),
+                            TextButton(
+                              onPressed: () async {
+                                Clipboard.setData(ClipboardData(text: new_key));
+                                ScaffoldMessenger.of(context)
+                                    .hideCurrentSnackBar();
+                              },
+                              child: Container(
+                                width: 67.v,
+                                height: 21.h,
+                                decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(55.v)),
+                                  color: Colors.white,
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    'Copy',
+                                    style: CustomTextStyles
+                                        .titleSmallDeeporangeA200,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      backgroundColor: Colors.deepOrange,
+                      duration: Duration(days: 1),
                     ),
-                  ),
-                  contentPadding: EdgeInsets.fromLTRB(20, 8, 8, 8),
-                  filled: true,
-                  fillColor: Colors.white,
-                ),
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.w500,
-                ),
-                cursorColor: Colors.black,
-                onChanged: (value) {
-                  setState(() {
-                    user_wallet = value;
-                  });
-                },
-              ),
-            ],
-          ),
-          actions: [
-            TextButton(
-              child: Text("Cancel"),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            Spacer(),
-            TextButton(
-              child: Text("OK"),
-              onPressed: () {
-                Navigator.of(context).pop();
+                  );
+                } catch (e) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      elevation: 20.v,
+                      content: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: [
+                            SizedBox(width: 5.h),
+                            Icon(
+                              Icons.error_outline,
+                              size: 35.adaptSize,
+                              color: Colors.white,
+                            ),
+                            SizedBox(width: 5.h),
+                            Text(
+                              'Failed to update',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      backgroundColor: Colors.deepOrange,
+                    ),
+                  );
+                }
               },
             ),
           ],
@@ -231,7 +322,7 @@ class _MySettingsScreenState extends State<MySettingsScreen> {
   Future<dynamic> showDeleteProfileDialog(BuildContext context, String Title) {
     return showDialog(
       context: context,
-      builder: (BuildContext context) {
+      builder: (BuildContext dialogContex) {
         return AlertDialog(
           title: Text(Title,
               style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
@@ -272,7 +363,7 @@ class _MySettingsScreenState extends State<MySettingsScreen> {
               SizedBox(height: 10),
               TextField(
                 decoration: InputDecoration(
-                  labelText: 'Confirm Password',
+                  labelText: 'Private Key',
                   labelStyle: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.w500,
@@ -295,7 +386,7 @@ class _MySettingsScreenState extends State<MySettingsScreen> {
                 obscureText: true,
                 onChanged: (value) {
                   setState(() {
-                    confirm_password = value;
+                    pkey = value;
                   });
                 },
               ),
@@ -305,14 +396,48 @@ class _MySettingsScreenState extends State<MySettingsScreen> {
             TextButton(
               child: Text("Cancel"),
               onPressed: () {
-                Navigator.of(context).pop();
+                Navigator.of(dialogContex).pop();
               },
             ),
             Spacer(),
             TextButton(
               child: Text("OK"),
-              onPressed: () {
-                Navigator.of(context).pop();
+              onPressed: () async {
+                try {
+                  final username = await DBMSHelper.getUserName();
+                  await DBMSHelper.deleteUserFromblockchain(
+                      username, password, pkey);
+                  Navigator.pushNamed(dialogContex, AppRoutes.loginScreen);
+                } catch (e) {
+                  Navigator.of(dialogContex).pop();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      elevation: 20.v,
+                      content: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: [
+                            SizedBox(width: 5.h),
+                            Icon(
+                              Icons.error_outline,
+                              size: 35.adaptSize,
+                              color: Colors.white,
+                            ),
+                            SizedBox(width: 5.h),
+                            Text(
+                              'Failed to delete',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      backgroundColor: Colors.deepOrange,
+                    ),
+                  );
+                }
               },
             ),
           ],
@@ -324,7 +449,7 @@ class _MySettingsScreenState extends State<MySettingsScreen> {
   Future<dynamic> showUpdateAvatarDialog(BuildContext context, String Title) {
     return showDialog(
       context: context,
-      builder: (BuildContext context) {
+      builder: (BuildContext dialogContex) {
         return AlertDialog(
           title: Text(
             Title,
@@ -336,28 +461,28 @@ class _MySettingsScreenState extends State<MySettingsScreen> {
             TextButton(
               child: Text("Cancel"),
               onPressed: () {
-                Navigator.of(context).pop();
+                Navigator.of(dialogContex).pop();
               },
             ),
             Spacer(),
             TextButton(
               child: Text("Pick"),
               onPressed: () async {
+                Navigator.of(dialogContex).pop();
                 final _image =
                     await _picker.pickImage(source: ImageSource.gallery);
+
                 if (_image != null) {
                   try {
                     final String? username = await DBMSHelper.getUserName();
-                    final String? pinatahash = await _pinFileToIPFS(_image);
+                    final String? pinatahash = await pinFileToIPFS(_image);
                     await DBMSHelper.updateCID(username!, pinatahash);
-                    print("-----------------------------------------------");
-                    print(pinatahash);
-                    print("------------------------------------------------");
                     setState(() {
                       urlpath =
                           "https://aquamarine-lazy-marmot-526.mypinata.cloud/ipfs/$pinatahash/?pinataGatewayToken=vSRxG5-Kq7UT0zr-khIm4yJqVmooF33MszFW5vIB-BqdCcu_sxASkUW9bkVHevhq";
                     });
                   } catch (e) {
+                    print(e);
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         elevation: 20.v,
@@ -387,7 +512,6 @@ class _MySettingsScreenState extends State<MySettingsScreen> {
                     );
                   }
                 }
-                Navigator.of(context).pop();
               },
             ),
           ],
@@ -396,43 +520,47 @@ class _MySettingsScreenState extends State<MySettingsScreen> {
     );
   }
 
-  Future<String> _pinFileToIPFS(var _image) async {
-    var url = "https://api.pinata.cloud/pinning/pinFileToIPFS";
-    print(jwtToken);
-    var headers = {
-      "Authorization": "Bearer " + jwtToken,
-    };
-
-    var request = http.MultipartRequest('POST', Uri.parse(url));
-    request.headers.addAll(headers);
-    request.fields['pinataMetadata'] = '{ "name": "Pinnie.json" }';
-    request.fields['pinataOptions'] = '{ "cidVersion": 1 }';
-    if (_image != null) {
-      request.files.add(http.MultipartFile(
-        'file',
-        _image!.readAsBytes().asStream(),
-        await _image!.length(),
-        filename: _image!.path.split('/').last,
-      ));
-    } else {
+  Future<String> pinFileToIPFS(var _image) async {
+    setState(() {
+      urlpath =
+          "https://aquamarine-lazy-marmot-526.mypinata.cloud/ipfs/QmPgxBMhTg6FTETanmWA5hCBpGvCZXEkZm2MkyH1s4MjvX/?pinataGatewayToken=vSRxG5-Kq7UT0zr-khIm4yJqVmooF33MszFW5vIB-BqdCcu_sxASkUW9bkVHevhq";
+    });
+    await DBMSHelper.unpin();
+    if (_image == null) {
       throw Exception('No image selected');
     }
 
-    var streamedResponse = await request.send();
-    var response = await http.Response.fromStream(streamedResponse);
-    final jsonResponse = json.decode(response.body);
+    final url = 'https://api.pinata.cloud/pinning/pinFileToIPFS';
+    final headers = {
+      "Authorization": "Bearer " + DBMSHelper.jwtToken,
+    };
+    final username = await DBMSHelper.getUserName();
+    final request = http.MultipartRequest('POST', Uri.parse(url));
+    request.headers.addAll(headers);
+    request.fields['pinataMetadata'] = '{ "name": "$username.jpeg" }';
+    request.fields['pinataOptions'] = '{ "cidVersion": 1 }';
+    request.files.add(http.MultipartFile(
+      'file',
+      _image.readAsBytes().asStream(),
+      await _image.length(),
+      filename: _image.path.split('/').last,
+    ));
+
+    final streamedResponse = await request.send();
+    final response = await http.Response.fromStream(streamedResponse);
+    final jsonResponse = await json.decode(response.body);
+
     if (response.statusCode == 200) {
       return jsonResponse['IpfsHash'];
     } else {
-      print(jsonResponse);
-      throw Exception('Failed to pin file to IPFS');
+      throw Exception('Failed to pin file to IPFS: ${jsonResponse['error']}');
     }
   }
 
   Future<dynamic> signOut(BuildContext context, String Title) {
     return showDialog(
       context: context,
-      builder: (BuildContext context) {
+      builder: (BuildContext dialogContex) {
         return AlertDialog(
           title: Text(
             Title,
@@ -443,17 +571,19 @@ class _MySettingsScreenState extends State<MySettingsScreen> {
             TextButton(
               child: Text("Cancel"),
               onPressed: () {
-                Navigator.of(context).pop();
+                Navigator.of(dialogContex).pop();
               },
             ),
             Spacer(),
             TextButton(
               child: Text("OK"),
               onPressed: () async {
+                Navigator.of(dialogContex).pop();
                 await DBMSHelper.deleteAccessToken();
                 await DBMSHelper.deleteUser();
-                Navigator.pushNamed(context, AppRoutes.loginScreen);
-              },
+                await DBMSHelper.deleteCID();
+                Navigator.pushNamed(dialogContex, AppRoutes.loginScreen);
+              }, // Added closing parenthesis and semicolon here
             ),
           ],
         );
@@ -500,7 +630,7 @@ class _MySettingsScreenState extends State<MySettingsScreen> {
             SizedBox(height: 10),
             ListTile(
               title: Text("Update Password",
-                  style: TextStyle(color: Colors.black87, fontSize: 22)),
+                  style: TextStyle(color: Colors.black87, fontSize: 20)),
               trailing: IconButton(
                 icon: Icon(
                   Icons.key,
@@ -514,7 +644,7 @@ class _MySettingsScreenState extends State<MySettingsScreen> {
             ),
             ListTile(
               title: Text("Delete Profile",
-                  style: TextStyle(color: Colors.black87, fontSize: 22)),
+                  style: TextStyle(color: Colors.black87, fontSize: 20)),
               trailing: IconButton(
                 icon: Icon(
                   Icons.delete,
@@ -527,22 +657,8 @@ class _MySettingsScreenState extends State<MySettingsScreen> {
               ),
             ),
             ListTile(
-              title: Text("Update Wallet Address",
-                  style: TextStyle(color: Colors.black87, fontSize: 22)),
-              trailing: IconButton(
-                icon: Icon(
-                  Icons.card_membership,
-                  size: 30,
-                  color: Colors.black,
-                ),
-                onPressed: () {
-                  showUpdateWalletDialog(context, "Update Wallet");
-                },
-              ),
-            ),
-            ListTile(
               title: Text("Update Avatar",
-                  style: TextStyle(color: Colors.black87, fontSize: 22)),
+                  style: TextStyle(color: Colors.black87, fontSize: 20)),
               trailing: IconButton(
                 icon: Icon(
                   Icons.person_2_rounded,
@@ -555,8 +671,22 @@ class _MySettingsScreenState extends State<MySettingsScreen> {
               ),
             ),
             ListTile(
+              title: Text("View on Explorer",
+                  style: TextStyle(color: Colors.black87, fontSize: 20)),
+              trailing: IconButton(
+                icon: Icon(
+                  Icons.public,
+                  size: 30,
+                  color: Colors.black,
+                ),
+                onPressed: () {
+                  _launchURL();
+                },
+              ),
+            ),
+            ListTile(
               title: Text("Sign Out",
-                  style: TextStyle(color: Colors.black87, fontSize: 22)),
+                  style: TextStyle(color: Colors.black87, fontSize: 20)),
               trailing: IconButton(
                 icon: Icon(
                   Icons.power_settings_new,
@@ -578,13 +708,20 @@ class _MySettingsScreenState extends State<MySettingsScreen> {
               ),
             ),
             Center(
-              child: Text("Augatha Christy",
-                  style: TextStyle(
-                      color: Colors.black87, fontSize: 21, fontFamily: "new")),
-            ),
+                child: Text("$_name",
+                    style: CustomTextStyles.headlineLargeBlack900))
           ],
         ),
       ),
     );
+  }
+
+  void _launchURL() async {
+    final url = await DBMSHelper.goBuddy();
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw Exception('Could not launch $url');
+    }
   }
 }

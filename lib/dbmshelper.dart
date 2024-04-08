@@ -1,9 +1,12 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class DBMSHelper {
   static String baseUrl = 'http://192.168.0.153:3000';
+  static String jwtToken =
+      dotenv.env['JWT'] ?? ""; //!Use your own pinata api token
 
   static Future<void> deleteAccessToken() async {
     final prefs = await SharedPreferences.getInstance();
@@ -13,6 +16,11 @@ class DBMSHelper {
   static Future<void> deleteUser() async {
     final prefs = await SharedPreferences.getInstance();
     prefs.remove('username');
+  }
+
+  static Future<void> deleteCID() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.remove('cid');
   }
 
   static Future<void> storeAccessToken(String accessToken) async {
@@ -63,6 +71,29 @@ class DBMSHelper {
 
     if (response.statusCode != 200) {
       throw Exception(data['error']);
+    }
+  }
+
+  static Future<void> unpin() async {
+    final existingCID = await DBMSHelper.getCID();
+
+    // Unpin existing CID if it exists
+    if (existingCID != null && existingCID != "") {
+      await DBMSHelper.deleteCID();
+      final url2 =
+          Uri.parse("https://api.pinata.cloud/pinning/unpin/$existingCID");
+      final response = await http.delete(
+        url2,
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + DBMSHelper.jwtToken,
+        },
+      );
+
+      if (response.statusCode != 200) {
+        final data = jsonDecode(response.body);
+        throw Exception("Failed to unpin existing CID: ${data['error']}");
+      }
     }
   }
 
@@ -224,6 +255,87 @@ class DBMSHelper {
       body: jsonEncode({
         'amount': amount,
         'name': username,
+      }),
+    );
+
+    final data = jsonDecode(response.body);
+
+    if (response.statusCode != 200) {
+      throw Exception(data['error']);
+    }
+  }
+
+  static Future<String> updatePassword(
+      String username,
+      String privateKey,
+      String previousPassword,
+      String newPassword,
+      String confirmPassword) async {
+    final url = Uri.parse('$baseUrl/update-password');
+    final response = await http.post(
+      url,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: jsonEncode({
+        'username': username,
+        'private_key': privateKey,
+        'previous_password': previousPassword,
+        'new_one': newPassword,
+        'confirm_password': confirmPassword,
+      }),
+    );
+
+    final data = jsonDecode(response.body);
+
+    if (response.statusCode != 200) {
+      throw Exception(data['error']);
+    } else {
+      return data["private_key"];
+    }
+  }
+
+  static Future<String> goBuddy() async {
+    final username = await DBMSHelper.getUserName();
+    final url = Uri.parse('$baseUrl/wallet');
+    final response = await http.post(
+      url,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: jsonEncode({
+        'username': username,
+      }),
+    );
+
+    final data = jsonDecode(response.body);
+
+    if (response.statusCode != 200) {
+      throw Exception(data['error']);
+    } else {
+      String wallet = data["wallet"];
+      String url = "https://sepolia.etherscan.io/address/$wallet";
+      return url;
+    }
+  }
+
+  static Future<void> deleteUserFromblockchain(
+      String? username, String? previousPassword, String? privateKey) async {
+    await DBMSHelper.unpin();
+    await DBMSHelper.deleteAccessToken();
+    await DBMSHelper.deleteUser();
+    await DBMSHelper.deleteCID();
+
+    final url = Uri.parse('$baseUrl/delete-user');
+    final response = await http.delete(
+      url,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: jsonEncode({
+        'username': username,
+        'previous_password': previousPassword,
+        'private_key': privateKey,
       }),
     );
 

@@ -20,7 +20,6 @@ class _Iphone13MiniTwentythreeScreenState
     extends State<Iphone13MiniTwentythreeScreen> {
   late SnackBar snackBar;
   late ConfettiController _controller;
-  bool _registering = false;
 
   @override
   void initState() {
@@ -183,9 +182,6 @@ class _Iphone13MiniTwentythreeScreenState
                                             await Future.delayed(
                                                 Duration(seconds: 2));
                                           } catch (error) {
-                                            setState(() {
-                                              _registering = false;
-                                            });
                                             final errorMessage = error;
                                             snackBar = SnackBar(
                                               elevation: 20.v,

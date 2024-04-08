@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:Relife/widgets/custom_text_form_field.dart';
 import 'package:Relife/widgets/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
@@ -157,8 +156,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.w700,
-                                    fontFamily: "new",
-                                    fontSize: 16.fSize),
+                                    fontSize: 15.fSize),
                               ),
                               backgroundColor: Colors.deepOrange,
                             );
