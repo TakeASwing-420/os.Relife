@@ -314,7 +314,7 @@ class DBMSHelper {
       throw Exception(data['error']);
     } else {
       String wallet = data["wallet"];
-      String url = "https://sepolia.etherscan.io/address/$wallet";
+      String url = "https://sepolia-optimism.etherscan.io/address/$wallet";
       return url;
     }
   }
@@ -337,6 +337,23 @@ class DBMSHelper {
         'previous_password': previousPassword,
         'private_key': privateKey,
       }),
+    );
+
+    final data = jsonDecode(response.body);
+
+    if (response.statusCode != 200) {
+      throw Exception(data['error']);
+    }
+  }
+
+  static Future<void> updatewallet(String username, String wallet) async {
+    final url = Uri.parse('$baseUrl/update-wallet');
+    final response = await http.post(
+      url,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: jsonEncode({'username': username, "wallet": wallet}),
     );
 
     final data = jsonDecode(response.body);

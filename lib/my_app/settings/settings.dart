@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import "animation.dart";
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
+import "updatewallet.dart";
 
 class MySettingsScreen extends StatefulWidget {
   @override
@@ -671,6 +672,27 @@ class _MySettingsScreenState extends State<MySettingsScreen> {
               ),
             ),
             ListTile(
+              title: Text("Update Wallet Address",
+                  style: TextStyle(color: Colors.black87, fontSize: 20)),
+              trailing: IconButton(
+                icon: Icon(
+                  Icons.card_membership,
+                  size: 30,
+                  color: Colors.black,
+                ),
+                onPressed: () async {
+                  final String? username = await DBMSHelper.getUserName();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => UpdatePage(
+                              username: username!,
+                            )),
+                  );
+                },
+              ),
+            ),
+            ListTile(
               title: Text("View on Explorer",
                   style: TextStyle(color: Colors.black87, fontSize: 20)),
               trailing: IconButton(
@@ -700,10 +722,10 @@ class _MySettingsScreenState extends State<MySettingsScreen> {
             ),
             Center(
               child: Padding(
-                padding: EdgeInsets.all(20),
+                padding: EdgeInsets.all(9),
                 child: ImageBuilderAnimation(
                   imageAssetPath: urlpath,
-                  RADIUS: 99,
+                  RADIUS: 90,
                 ),
               ),
             ),

@@ -170,8 +170,7 @@ class _Iphone13MiniTwentythreeScreenState
                                                 '$response',
                                                 style: TextStyle(
                                                     color: Colors.white,
-                                                    fontFamily: "Poppins",
-                                                    fontSize: 16.fSize),
+                                                    fontSize: 15.fSize),
                                               ),
                                               backgroundColor:
                                                   Colors.deepOrange,
@@ -198,8 +197,7 @@ class _Iphone13MiniTwentythreeScreenState
                                                     '$errorMessage',
                                                     style: TextStyle(
                                                         color: Colors.white,
-                                                        fontSize: 16.fSize,
-                                                        fontFamily: "Poppins"),
+                                                        fontSize: 15.fSize),
                                                   ),
                                                 ],
                                               ),
