@@ -105,6 +105,32 @@ class CustomTextStyles {
       theme.textTheme.titleSmall!.spaceGrotesk.copyWith(
         fontWeight: FontWeight.w700,
       );
+
+  static get displaySmallBlack90001 => theme.textTheme.displaySmall!.copyWith(
+        color: Colors.blueGrey,
+      );
+  static get displaySmallBlack90001_1 => theme.textTheme.displaySmall!.copyWith(
+        color: const Color.fromARGB(255, 7, 7, 7),
+      );
+  static get displaySmallWhiteA70001 => theme.textTheme.displaySmall!.copyWith(
+        color: const Color.fromARGB(255, 243, 232, 232),
+      );
+// Title text style
+  static get titleMediumDeeporangeA200 => theme.textTheme.titleMedium!.copyWith(
+        color: appTheme.deepOrangeA200,
+      );
+  static get titleMediumGray50 => theme.textTheme.titleMedium!.copyWith(
+        color: appTheme.gray50,
+        fontSize: 40.fSize,
+      );
+  static get titleMediumWhiteA70001 => theme.textTheme.titleMedium!.copyWith(
+        color: const Color.fromARGB(255, 243, 232, 232),
+        fontSize: 31.fSize,
+      );
+  static get titleSmallPink100 => theme.textTheme.titleSmall!.copyWith(
+        color: appTheme.pink100,
+        fontSize: 15.fSize,
+      );
 }
 
 extension on TextStyle {

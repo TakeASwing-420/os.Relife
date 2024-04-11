@@ -2,7 +2,7 @@
 //* It relies on Flutter's built-in StatefulWidget and setState method for managing the state within the widget.
 import 'package:flutter/material.dart';
 
-class ImageBuilderAnimation extends StatelessWidget {
+class ImageBuilderAnimation extends StatefulWidget {
   final String imageAssetPath;
   final double RADIUS;
 
@@ -10,6 +10,11 @@ class ImageBuilderAnimation extends StatelessWidget {
       {Key? key, required this.imageAssetPath, required this.RADIUS})
       : super(key: key);
 
+  @override
+  State<ImageBuilderAnimation> createState() => _ImageBuilderAnimationState();
+}
+
+class _ImageBuilderAnimationState extends State<ImageBuilderAnimation> {
   @override
   Widget build(BuildContext context) {
     return TweenAnimationBuilder<double>(
@@ -20,8 +25,8 @@ class ImageBuilderAnimation extends StatelessWidget {
             scale: _scale,
             child: CircleAvatar(
                 backgroundColor: Colors.transparent,
-                backgroundImage: NetworkImage(imageAssetPath),
-                radius: _scale * RADIUS));
+                backgroundImage: NetworkImage(widget.imageAssetPath),
+                radius: _scale * widget.RADIUS));
       },
     );
   }

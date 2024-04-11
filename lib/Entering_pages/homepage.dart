@@ -68,6 +68,7 @@ class _HomePageState extends State<HomePage> {
       access_token = registrationResult['token'];
       await DBMSHelper.storeAccessToken(access_token!);
       await DBMSHelper.storeUserName(_username!);
+      await DBMSHelper.deleteCID();
       _showPrivateKeySnackbar();
       return true;
     } on SocketException {

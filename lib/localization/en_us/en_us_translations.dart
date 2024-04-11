@@ -1,0 +1,20 @@
+final Map<String, String> enUs = {
+  "lbl_21_15": "21:15",
+  "lbl_25": "25",
+  "lbl_3": "3",
+  "lbl_359": "359 ",
+  "lbl_359_kcal": "359 kcal",
+  "lbl_3h_25m": "3h 25m",
+  "lbl_8104": "8104",
+  "lbl_8104_steps": "8104 Steps",
+  "lbl_activity": "Activity",
+  "lbl_average": "Average",
+  "lbl_avg_5303_steps": "Avg. 5303 steps",
+  "lbl_h": "h",
+  "lbl_kcal": "kcal",
+  "lbl_m": "m",
+  "lbl_steps": "Steps",
+  "lbl_today": "Today",
+  "msg_network_err": "Network Error",
+  "msg_something_went_wrong": "Something Went Wrong!"
+};

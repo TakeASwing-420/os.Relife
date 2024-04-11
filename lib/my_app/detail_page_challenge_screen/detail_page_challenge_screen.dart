@@ -27,18 +27,30 @@ class DetailPageChallengeScreen extends StatefulWidget {
 
 class _DetailPageChallengeScreenState extends State<DetailPageChallengeScreen> {
   bool _working = false;
+  late Color _mycolor;
+  late String _mytext;
+  @override
+  void initState() {
+    super.initState();
+    _mycolor = widget.mycolor;
+    _mytext = widget.mytext;
+  }
 
   Future<void> begar_khata1() async {
     await DBMSHelper.fetchTokens(widget.creditScore);
     await DBMSHelper.setChallenges(widget.challengeIndex, false);
     await Future.delayed(Duration(seconds: 5));
-    Navigator.pushNamed(context, AppRoutes.challengePage);
+    Navigator.pushNamed(context, AppRoutes.map);
   }
 
   Future<void> begar_khata2() async {
     await DBMSHelper.setChallenges(widget.challengeIndex, true);
     await Future.delayed(Duration(seconds: 5));
-    Navigator.pushNamed(context, AppRoutes.challengePage);
+    setState(() {
+      _working = false;
+      _mycolor = Colors.green;
+      _mytext = "Active";
+    });
   }
 
   @override
@@ -190,7 +202,7 @@ class _DetailPageChallengeScreenState extends State<DetailPageChallengeScreen> {
                               onTap: () {
                                 setState(() {
                                   _working = true;
-                                  if (widget.mycolor == Colors.green) {
+                                  if (_mycolor == Colors.green) {
                                     begar_khata1();
                                   } else {
                                     begar_khata2();
@@ -227,12 +239,12 @@ class _DetailPageChallengeScreenState extends State<DetailPageChallengeScreen> {
       height: 42.v,
       width: 140.h,
       decoration: BoxDecoration(
-        color: widget.mycolor,
+        color: _mycolor,
         borderRadius: BorderRadius.circular(8.v),
       ),
       alignment: Alignment.center,
       child: Text(
-        widget.mytext,
+        _mytext,
         style: CustomTextStyles.titleSmallSpaceGrotesk.copyWith(
           color: Colors.white,
         ),

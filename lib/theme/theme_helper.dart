@@ -205,6 +205,7 @@ class PrimaryColors {
   Color get gray400 => Color(0XFFC9C9C9);
   Color get gray500 => Color(0XFF949494);
   Color get gray50001 => Color(0XFFB0A29D);
+  Color get gray5001 => Color(0XFFFFF8F7);
   Color get gray800 => Color(0XFF494950);
   Color get gray900 => Color(0XFF242422);
   Color get gray90001 => Color(0XFF181A1F);
@@ -227,10 +228,11 @@ class PrimaryColors {
   // Teal
   Color get teal500 => Color(0XFF009683);
   Color get tealA400 => Color(0XFF26DFC6);
-  Color get tealA700 => Color(0XFF0ECCB3);
+  Color get tealA700 => Color.fromARGB(255, 7, 219, 190);
 
   // White
   Color get whiteA700 => Color(0XFFFFFFFF);
+  Color get pink100 => Color(0XFFE4C9C9);
 
   // Yellow
   Color get yellow800 => Color(0XFFFB9F16);

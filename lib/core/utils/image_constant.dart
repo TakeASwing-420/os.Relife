@@ -2,6 +2,18 @@ class ImageConstant {
   // Image folder path
   static String imagePath = 'assets/images';
 
+// Fitness tracker details images
+  static String imgInbox = '$imagePath/img_inbox.svg';
+
+  static String imgSnazzyImage1 = '$imagePath/img_snazzy_image_1.png';
+
+  static String imgVector4 = '$imagePath/img_vector_4.png';
+
+  static String imgVector5 = '$imagePath/img_vector_5.png';
+
+  static String imgOverflowMenu = '$imagePath/img_overflow_menu.svg';
+
+  static String imageNotFound = 'assets/images/image_not_found.png';
   // iPhone 13 mini - TwentySeven images
   static String imgGroup21119 = '$imagePath/img_group_21119.svg';
 
@@ -108,8 +120,6 @@ class ImageConstant {
   static String imgThumbsUp = '$imagePath/img_thumbs_up.svg';
 
   static String imgSearchGray500 = '$imagePath/img_search_gray_500.svg';
-
-  static String imageNotFound = 'assets/images/image_not_found.png';
 
   // SplashScreen images
   static String imgLogo = '$imagePath/img_logo.png';

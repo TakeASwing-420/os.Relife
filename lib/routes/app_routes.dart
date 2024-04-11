@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import "package:Relife/my_app/fitness_tracker_details_screen/fitness_tracker_details_screen.dart";
 import 'package:Relife/my_app/medical/medical.dart';
 import 'package:Relife/my_app/challenge_container_screen/challenge_container_screen.dart';
 
@@ -21,6 +21,8 @@ class AppRoutes {
 
   static const String splashscreenScreen = '/splash_screen';
 
+  static const String map = "/mapscreen";
+
   static const String loginScreen = '/login_screen';
 
   static const String registarScreen = '/registar_screen';
@@ -32,5 +34,6 @@ class AppRoutes {
     splashscreenScreen: (context) => SplashScreen(),
     loginScreen: (context) => LoginScreen(),
     registarScreen: (context) => RegistarScreen(),
+    map: (context) => FitnessTrackerDetailsScreen()
   };
 }

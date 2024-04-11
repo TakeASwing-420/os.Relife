@@ -345,12 +345,12 @@ class _Iphone13MiniTwentythreeScreenState
                                 horizontal: 12.h,
                                 vertical: 3.v,
                               ),
-                              decoration: AppDecoration.fillWhiteA7001.copyWith(
+                              decoration: AppDecoration.fillGray50.copyWith(
                                 borderRadius: BorderRadiusStyle.roundedBorder12,
                               ),
                               child: Text(
                                 "49 visits",
-                                style: theme.textTheme.titleSmall,
+                                style: CustomTextStyles.titleSmallBlack900,
                               ),
                             ),
                             SizedBox(height: 20.v),
@@ -548,7 +548,7 @@ class _Iphone13MiniTwentythreeScreenState
                                   padding:
                                       EdgeInsets.symmetric(horizontal: 12.h),
                                   decoration:
-                                      AppDecoration.fillBlack900.copyWith(
+                                      AppDecoration.fillBlack90026.copyWith(
                                     borderRadius:
                                         BorderRadiusStyle.roundedBorder12,
                                   ),

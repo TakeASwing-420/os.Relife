@@ -21,6 +21,8 @@ dependencies:
   walletconnect_dart: ^0.0.11
   web3dart: ^2.7.1
   web3modal_flutter: ^3.0.1
+  connectivity_plus: ^5.0.2
+  google_maps_flutter: ^2.5.0
 
 dev_dependencies: 
   flutter_test: 
@@ -60,6 +62,11 @@ flutter:
           weight: 600
         - asset: assets/fonts/InterBold.ttf
           weight: 700
+    - family: Abhaya Libre ExtraBold
+      fonts: 
+        - asset: assets/fonts/AbhayaLibreExtraBold.ttf
+          weight: 800
+
     - family: Poppins
       fonts: 
         - asset: assets/fonts/PoppinsSemiBold.ttf
