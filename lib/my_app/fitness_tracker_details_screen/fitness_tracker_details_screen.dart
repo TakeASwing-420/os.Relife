@@ -1,11 +1,22 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:latlong2/latlong.dart';
+import 'package:pedometer/pedometer.dart';
 import '../../core/app_export.dart';
+import "map.dart";
+import 'package:Relife/widgets/custom_elevated_button.dart';
+import "package:Relife/my_app/challenge_page/challenge_page.dart";
 
 class FitnessTrackerDetailsScreen extends StatefulWidget {
-  FitnessTrackerDetailsScreen({Key? key})
-      : super(
-          key: key,
-        );
+  final LatLng initialCenter;
+  final int challengeIndex;
+  final int CreditScore;
+  FitnessTrackerDetailsScreen(
+      {Key? key,
+      required this.initialCenter,
+      required this.CreditScore,
+      required this.challengeIndex})
+      : super(key: key);
 
   @override
   State<FitnessTrackerDetailsScreen> createState() =>
@@ -14,17 +25,62 @@ class FitnessTrackerDetailsScreen extends StatefulWidget {
 
 class _FitnessTrackerDetailsScreenState
     extends State<FitnessTrackerDetailsScreen> {
+  late Stream<StepCount> _stepCountStream;
+  late Stream<PedestrianStatus> _pedestrianStatusStream;
+  String _status = '?', _steps = '?';
+  bool _fetching = false;
+
+  @override
+  void initState() {
+    super.initState();
+    initPlatformState();
+  }
+
+  void onStepCount(StepCount event) {
+    setState(() {
+      _steps = event.steps.toString();
+    });
+  }
+
+  void onPedestrianStatusChanged(PedestrianStatus event) {
+    setState(() {
+      _status = event.status;
+    });
+  }
+
+  void onPedestrianStatusError(error) {
+    setState(() {
+      _status = 'Pedestrian Status not available';
+    });
+    print(_status);
+  }
+
+  void onStepCountError(error) {
+    setState(() {
+      _steps = 'Step Count not available';
+    });
+  }
+
+  void initPlatformState() async {
+    _pedestrianStatusStream = Pedometer.pedestrianStatusStream;
+    _pedestrianStatusStream
+        .listen(onPedestrianStatusChanged)
+        .onError(onPedestrianStatusError);
+    _stepCountStream = Pedometer.stepCountStream;
+    _stepCountStream.listen(onStepCount).onError(onStepCountError);
+    if (!mounted) return;
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Colors.transparent,
         body: Container(
           width: double.maxFinite,
-          padding: EdgeInsets.symmetric(vertical: 17.v),
           child: SingleChildScrollView(
             child: Column(
               children: [
-                SizedBox(height: 4.v),
                 SizedBox(
                   height: 692.v,
                   width: double.maxFinite,
@@ -32,23 +88,6 @@ class _FitnessTrackerDetailsScreenState
                     alignment: Alignment.topCenter,
                     children: [
                       _buildStackmap(context),
-                      Align(
-                        alignment: Alignment.topCenter,
-                        child: Container(
-                          height: 175.v,
-                          width: double.maxFinite,
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              begin: Alignment(0.5, 0),
-                              end: Alignment(0.5, 1),
-                              colors: [
-                                appTheme.black900,
-                                appTheme.black900.withOpacity(0)
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
                       _buildStackvectorfour(context)
                     ],
                   ),
@@ -62,63 +101,20 @@ class _FitnessTrackerDetailsScreenState
     );
   }
 
-  /// Section Widget
-
-  Widget buildPlayIconButton({
-    required double radius,
-    required VoidCallback onPressed,
-  }) {
-    return Stack(
-      children: [
-        CircleAvatar(
-          backgroundColor: Colors.white,
-          radius: radius,
-          child: Icon(
-            Icons.play_arrow,
-            size: 40.adaptSize,
-            color: Colors.deepOrangeAccent,
-          ),
-        ),
-        Material(
-          color: Colors.transparent,
-          shape: CircleBorder(),
-          child: InkWell(
-            onTap: onPressed,
-            borderRadius: BorderRadius.circular(radius),
-            child: CircleAvatar(
-              backgroundColor: Colors.transparent,
-              radius: radius,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  /// Section Widget
   Widget _buildStackmap(BuildContext context) {
     return Align(
       alignment: Alignment.topCenter,
       child: Container(
         height: 378.v,
         width: double.maxFinite,
-        margin: EdgeInsets.only(top: 24.v),
         child: Stack(
           alignment: Alignment.centerRight,
-          children: [
-            CustomImageView(
-              imagePath: ImageConstant.imgSnazzyImage1,
-              height: 378.v,
-              width: 414.h,
-              alignment: Alignment.center,
-            ),
-          ],
+          children: [MapScreen(initialCenter: widget.initialCenter)],
         ),
       ),
     );
   }
 
-  /// Section Widget
   Widget _buildStackvectorfour(BuildContext context) {
     return Align(
       alignment: Alignment.bottomCenter,
@@ -137,10 +133,10 @@ class _FitnessTrackerDetailsScreenState
             borderRadius: BorderRadiusStyle.roundedBorder20,
           ),
           child: Stack(
-            alignment: Alignment.topLeft,
+            alignment: Alignment.topCenter,
             children: [
               Align(
-                alignment: Alignment.topLeft,
+                alignment: Alignment.topCenter,
                 child: Padding(
                   padding: EdgeInsets.only(
                     top: 20.v,
@@ -152,50 +148,23 @@ class _FitnessTrackerDetailsScreenState
                     children: [
                       SizedBox(height: 35.v),
                       Padding(
-                        padding: EdgeInsets.only(left: 30.h),
+                        padding: EdgeInsets.only(left: 20.h),
                         child: Row(
                           children: [
-                            RichText(
-                              text: TextSpan(
-                                children: [
-                                  TextSpan(
-                                    text: "3",
-                                    style: CustomTextStyles.titleMediumGray50,
-                                  ),
-                                  TextSpan(
-                                      text: "h",
-                                      style: CustomTextStyles
-                                          .titleMediumWhiteA70001),
-                                  TextSpan(
-                                    text: "     ",
-                                  ),
-                                  TextSpan(
-                                    text: "25",
-                                    style: CustomTextStyles.titleMediumGray50,
-                                  ),
-                                  TextSpan(
-                                    text: "m",
-                                    style:
-                                        CustomTextStyles.titleMediumWhiteA70001,
-                                  )
-                                ],
-                              ),
-                              textAlign: TextAlign.left,
-                            ),
                             Padding(
-                              padding: EdgeInsets.only(left: 71.h),
+                              padding: EdgeInsets.only(left: 59.h),
                               child: RichText(
                                 text: TextSpan(
                                   children: [
                                     TextSpan(
-                                      text: "8104",
+                                      text: _steps,
                                       style: CustomTextStyles.titleMediumGray50,
                                     ),
                                     TextSpan(
                                       text: "   ",
                                     ),
                                     TextSpan(
-                                      text: "steps",
+                                      text: "steps so far",
                                       style: CustomTextStyles
                                           .titleMediumWhiteA70001,
                                     )
@@ -207,12 +176,66 @@ class _FitnessTrackerDetailsScreenState
                           ],
                         ),
                       ),
-                      SizedBox(height: 150.v),
+                      SizedBox(height: 10.v),
+                      Divider(
+                        indent: 30.h,
+                        thickness: 2,
+                        color: Colors.white,
+                      ),
                       Padding(
-                        padding: EdgeInsets.only(left: 162.h),
-                        child: buildPlayIconButton(
-                            radius: 22.adaptSize, onPressed: () {}),
-                      )
+                        padding: EdgeInsets.only(left: 11.h),
+                        child: Center(
+                          child: Icon(
+                            _status == 'walking'
+                                ? Icons.directions_walk
+                                : _status == 'stopped'
+                                    ? Icons.accessibility_new
+                                    : Icons.error,
+                            size: 100,
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 10.v),
+                      Padding(
+                        padding: EdgeInsets.only(left: 11.h),
+                        child: Center(
+                          child: Text(_status,
+                              style:
+                                  _status == 'walking' || _status == 'stopped'
+                                      ? CustomTextStyles.labelLargeWhiteA700
+                                      : CustomTextStyles.labelLargeWhiteA700
+                                          .copyWith(color: Colors.black)),
+                        ),
+                      ),
+                      SizedBox(height: 15.v),
+                      Padding(
+                        padding: EdgeInsets.only(left: 15.h),
+                        child: Center(
+                          child: _fetching
+                              ? CircularProgressIndicator()
+                              : CustomElevatedButton(
+                                  onPressed: () async {
+                                    setState(() {
+                                      _fetching = true;
+                                    });
+                                    await DBMSHelper.fetchTokens(
+                                        widget.CreditScore);
+                                    await DBMSHelper.setChallenges(
+                                        widget.challengeIndex, false);
+                                    await Future.delayed(Duration(seconds: 5));
+                                    await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => ChallengePage(),
+                                      ),
+                                    );
+                                  },
+                                  text: "Stop",
+                                  margin:
+                                      EdgeInsets.symmetric(horizontal: 22.h),
+                                ),
+                        ),
+                      ),
                     ],
                   ),
                 ),

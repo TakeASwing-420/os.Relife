@@ -121,11 +121,11 @@ class CustomTextStyles {
       );
   static get titleMediumGray50 => theme.textTheme.titleMedium!.copyWith(
         color: appTheme.gray50,
-        fontSize: 40.fSize,
+        fontSize: 30.fSize,
       );
   static get titleMediumWhiteA70001 => theme.textTheme.titleMedium!.copyWith(
         color: const Color.fromARGB(255, 243, 232, 232),
-        fontSize: 31.fSize,
+        fontSize: 30.fSize,
       );
   static get titleSmallPink100 => theme.textTheme.titleSmall!.copyWith(
         color: appTheme.pink100,

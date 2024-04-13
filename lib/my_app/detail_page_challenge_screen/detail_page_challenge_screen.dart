@@ -2,8 +2,11 @@ import 'package:Relife/core/app_export.dart';
 import 'package:Relife/widgets/app_bar/appbar_leading_image.dart';
 import 'package:Relife/widgets/app_bar/appbar_subtitle.dart';
 import 'package:Relife/widgets/app_bar/custom_app_bar.dart';
+import 'package:Relife/my_app/fitness_tracker_details_screen/fitness_tracker_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:readmore/readmore.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:latlong2/latlong.dart';
 
 class DetailPageChallengeScreen extends StatefulWidget {
   final int creditScore;
@@ -29,18 +32,42 @@ class _DetailPageChallengeScreenState extends State<DetailPageChallengeScreen> {
   bool _working = false;
   late Color _mycolor;
   late String _mytext;
+  late LatLng myPoint;
   @override
   void initState() {
     super.initState();
     _mycolor = widget.mycolor;
     _mytext = widget.mytext;
+    _getStoredLocation();
+  }
+
+  Future<void> _getStoredLocation() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    double? latitude = prefs.getDouble('current_latitude');
+    double? longitude = prefs.getDouble('current_longitude');
+    if (latitude != null && longitude != null) {
+      setState(() {
+        myPoint = LatLng(latitude, longitude);
+      });
+    }
   }
 
   Future<void> begar_khata1() async {
-    await DBMSHelper.fetchTokens(widget.creditScore);
-    await DBMSHelper.setChallenges(widget.challengeIndex, false);
-    await Future.delayed(Duration(seconds: 5));
-    Navigator.pushNamed(context, AppRoutes.map);
+    try {
+      await Future.delayed(Duration(seconds: 5)); // Delay for 5 seconds
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => FitnessTrackerDetailsScreen(
+            initialCenter: myPoint,
+            CreditScore: widget.creditScore,
+            challengeIndex: widget.challengeIndex,
+          ),
+        ),
+      );
+    } catch (e) {
+      print("Error occurred: $e");
+    }
   }
 
   Future<void> begar_khata2() async {

@@ -52,15 +52,13 @@ class RegistarScreen extends StatelessWidget {
                 SizedBox(height: 29.v),
                 _buildRegister(context),
                 SizedBox(height: 30.v),
-                Text(
-                  "You need to have a crypto wallet",
-                  style: CustomTextStyles.titleSmallBlack900,
-                ),
-                SizedBox(height: 4.v),
-                Text(
-                  "..but don't worry no transaction cost will be charged from your end",
-                  maxLines: 2,
-                  style: CustomTextStyles.titleSmallBlack900,
+                Padding(
+                  padding: EdgeInsets.only(left: 23.h),
+                  child: Text(
+                    "You need to have a crypto wallet..but don't worry no transaction cost will be charged from your end",
+                    style: CustomTextStyles.titleSmallBlack900,
+                    maxLines: 2,
+                  ),
                 ),
                 SizedBox(height: 57.v),
                 GestureDetector(

@@ -34,6 +34,5 @@ class AppRoutes {
     splashscreenScreen: (context) => SplashScreen(),
     loginScreen: (context) => LoginScreen(),
     registarScreen: (context) => RegistarScreen(),
-    map: (context) => FitnessTrackerDetailsScreen()
   };
 }

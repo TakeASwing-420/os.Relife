@@ -6,7 +6,12 @@ environment:
 dependencies: 
   flutter: 
     sdk: flutter
-
+  geolocator: any
+  pedometer: any
+  cupertino_icons: ^1.0.2
+  flutter_map: ^6.1.0
+  open_route_service: ^1.2.4
+  latlong2: ^0.9.0
   image_picker: ^1.0.2
   confetti: any
   cached_network_image: ^3.3.0

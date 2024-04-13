@@ -4,7 +4,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class DBMSHelper {
-  static String baseUrl = 'http://192.168.0.153:3000';
+  static String baseUrl =
+      'http://relife-env.eba-na2t3mgp.ap-south-1.elasticbeanstalk.com'; //!This is AWS cloud server but you can run on localhost too
   static String jwtToken =
       dotenv.env['JWT'] ?? ""; //!Use your own pinata api token
 
@@ -261,6 +262,7 @@ class DBMSHelper {
     final data = jsonDecode(response.body);
 
     if (response.statusCode != 200) {
+      print(data);
       throw Exception(data['error']);
     }
   }
@@ -314,7 +316,7 @@ class DBMSHelper {
       throw Exception(data['error']);
     } else {
       String wallet = data["wallet"];
-      String url = "https://sepolia-optimism.etherscan.io/address/$wallet";
+      String url = "https://sepolia.etherscan.io/address/$wallet";
       return url;
     }
   }
