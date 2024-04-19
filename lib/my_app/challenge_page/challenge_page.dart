@@ -135,6 +135,7 @@ class _ChallengePageState extends State<ChallengePage> {
                   ChallengelistItemWidget(
                     challengeIndex: 0,
                     isActive: challengeList[0],
+                    participationFee: 1000,
                     creditScore: 2000,
                     imagePath: ImageConstant.img1669Logo385x375,
                   ),
@@ -149,13 +150,15 @@ class _ChallengePageState extends State<ChallengePage> {
                   ChallengelistItemWidget(
                     challengeIndex: 2,
                     isActive: challengeList[2],
-                    creditScore: 500,
+                    participationFee: 1500,
+                    creditScore: 2500,
                     imagePath: ImageConstant.img1616Logo,
                   ),
                   SizedBox(height: 8.v),
                   ChallengelistItemWidget(
                     challengeIndex: 3,
                     isActive: challengeList[3],
+                    participationFee: 500,
                     creditScore: 1000,
                     imagePath: ImageConstant.img1669Logo385x375,
                   ),

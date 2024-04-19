@@ -13,12 +13,14 @@ class DetailPageChallengeScreen extends StatefulWidget {
   final Color mycolor;
   final String mytext;
   final int challengeIndex;
+  final int? participation_fee;
   DetailPageChallengeScreen(
       {Key? key,
       required this.creditScore,
       required this.challengeIndex,
       required this.mycolor,
-      required this.mytext})
+      required this.mytext,
+      this.participation_fee})
       : super(
           key: key,
         );
@@ -54,7 +56,7 @@ class _DetailPageChallengeScreenState extends State<DetailPageChallengeScreen> {
 
   Future<void> begar_khata1() async {
     try {
-      await Future.delayed(Duration(seconds: 5)); // Delay for 5 seconds
+      await Future.delayed(Duration(seconds: 5));
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -70,7 +72,8 @@ class _DetailPageChallengeScreenState extends State<DetailPageChallengeScreen> {
     }
   }
 
-  Future<void> begar_khata2() async {
+  Future<void> begar_khata2(int? pf) async {
+    if (pf != null) await DBMSHelper.redeemTokens(pf);
     await DBMSHelper.setChallenges(widget.challengeIndex, true);
     await Future.delayed(Duration(seconds: 5));
     setState(() {
@@ -215,8 +218,8 @@ class _DetailPageChallengeScreenState extends State<DetailPageChallengeScreen> {
                             SizedBox(
                               width: 326.h,
                               child: ReadMoreText(
-                                "Join us for the Delhi 200KM Bike Challenge! This grueling event tests the limits of endurance as participants cycle 200 kilometers through the bustling streets of Delhi. With challenging terrain  ",
-                                trimLines: 4,
+                                "Join us for the Delhi 200KM Bike Challenge! This grueling event tests the limits of endurance as participants cycle 200 kilometers through the bustling streets of Delhi. With challenging terrains, you will embark on a gruesome adventure. ",
+                                trimLines: 3,
                                 colorClickableText: appTheme.deepOrange500,
                                 trimMode: TrimMode.Line,
                                 trimCollapsedText: "Read more...",
@@ -232,7 +235,7 @@ class _DetailPageChallengeScreenState extends State<DetailPageChallengeScreen> {
                                   if (_mycolor == Colors.green) {
                                     begar_khata1();
                                   } else {
-                                    begar_khata2();
+                                    begar_khata2(widget.participation_fee);
                                   }
                                 });
                               },

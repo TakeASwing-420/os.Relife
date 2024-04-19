@@ -731,7 +731,7 @@ class _MySettingsScreenState extends State<MySettingsScreen> {
             ),
             Center(
                 child: Text("$_name",
-                    style: CustomTextStyles.headlineLargeBlack900))
+                    style: CustomTextStyles.titleMediumSpaceGroteskGray900))
           ],
         ),
       ),

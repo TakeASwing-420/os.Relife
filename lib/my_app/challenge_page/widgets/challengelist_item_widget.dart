@@ -8,13 +8,16 @@ class ChallengelistItemWidget extends StatefulWidget {
   final int creditScore;
   final bool isActive;
   final int challengeIndex;
-  const ChallengelistItemWidget(
-      {Key? key,
-      required this.imagePath,
-      required this.isActive,
-      required this.creditScore,
-      required this.challengeIndex})
-      : super(key: key);
+  final int? participationFee;
+
+  const ChallengelistItemWidget({
+    Key? key,
+    required this.imagePath,
+    required this.isActive,
+    required this.creditScore,
+    required this.challengeIndex,
+    this.participationFee,
+  }) : super(key: key);
 
   @override
   State<ChallengelistItemWidget> createState() =>
@@ -139,6 +142,34 @@ class _ChallengelistItemWidgetState extends State<ChallengelistItemWidget> {
                     ],
                   ),
                 ),
+                if (widget.participationFee != null)
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 4.v),
+                      RichText(
+                        text: TextSpan(
+                          text: 'Participation Fee: ',
+                          style: TextStyle(
+                            color: appTheme.black900,
+                            fontSize: 15.fSize,
+                            fontWeight: FontWeight.bold,
+                            fontStyle: FontStyle.normal,
+                          ),
+                          children: [
+                            TextSpan(
+                              text: '${widget.participationFee}',
+                              style: TextStyle(
+                                color: appTheme.gray800,
+                                fontStyle: FontStyle.normal,
+                                fontSize: 13.fSize,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 SizedBox(height: 3.v),
                 Text(
                   "Ride with Rivelo",
@@ -147,19 +178,36 @@ class _ChallengelistItemWidgetState extends State<ChallengelistItemWidget> {
                 SizedBox(height: 3.v),
                 CustomElevatedButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => DetailPageChallengeScreen(
-                            mycolor: widget.isActive
-                                ? Colors.green
-                                : Colors.redAccent,
-                            mytext:
-                                widget.isActive ? "Active" : "Join Challenge",
-                            creditScore: widget.creditScore,
-                            challengeIndex: widget.challengeIndex),
-                      ),
-                    );
+                    if (widget.participationFee != null) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DetailPageChallengeScreen(
+                              mycolor: widget.isActive
+                                  ? Colors.green
+                                  : Colors.redAccent,
+                              mytext:
+                                  widget.isActive ? "Active" : "Join Challenge",
+                              participation_fee: widget.participationFee,
+                              creditScore: widget.creditScore,
+                              challengeIndex: widget.challengeIndex),
+                        ),
+                      );
+                    } else {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DetailPageChallengeScreen(
+                              mycolor: widget.isActive
+                                  ? Colors.green
+                                  : Colors.redAccent,
+                              mytext:
+                                  widget.isActive ? "Active" : "Join Challenge",
+                              creditScore: widget.creditScore,
+                              challengeIndex: widget.challengeIndex),
+                        ),
+                      );
+                    }
                   },
                   height: 38.v,
                   width: 140.h,

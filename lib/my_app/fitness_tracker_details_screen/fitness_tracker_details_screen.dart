@@ -183,7 +183,7 @@ class _FitnessTrackerDetailsScreenState
                         color: Colors.white,
                       ),
                       Padding(
-                        padding: EdgeInsets.only(left: 11.h),
+                        padding: EdgeInsets.only(left: 15.h),
                         child: Center(
                           child: Icon(
                             _status == 'walking'
@@ -197,7 +197,7 @@ class _FitnessTrackerDetailsScreenState
                       ),
                       SizedBox(height: 10.v),
                       Padding(
-                        padding: EdgeInsets.only(left: 11.h),
+                        padding: EdgeInsets.only(left: 19.h),
                         child: Center(
                           child: Text(_status,
                               style:
@@ -209,7 +209,7 @@ class _FitnessTrackerDetailsScreenState
                       ),
                       SizedBox(height: 15.v),
                       Padding(
-                        padding: EdgeInsets.only(left: 15.h),
+                        padding: EdgeInsets.only(left: 24.h),
                         child: Center(
                           child: _fetching
                               ? CircularProgressIndicator()

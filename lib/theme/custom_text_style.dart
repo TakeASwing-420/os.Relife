@@ -92,7 +92,7 @@ class CustomTextStyles {
       );
   static get titleMediumSpaceGroteskGray900 =>
       theme.textTheme.titleMedium!.spaceGrotesk.copyWith(
-        color: appTheme.gray900,
+        color: appTheme.gray800,
         fontWeight: FontWeight.w700,
       );
   static get titleMediumWhiteA700 => theme.textTheme.titleMedium!.copyWith(
